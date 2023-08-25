@@ -1,0 +1,7 @@
+ARG_ENABLE('fastmath', 'fastmath support', 'no');
+
+if (PHP_FASTMATH != 'no') {
+	AC_DEFINE('HAVE_FASTMATH', 1, 'fastmath support enabled');
+
+	EXTENSION('fastmath', 'fastmath.c', null, '/DZEND_ENABLE_STATIC_TSRMLS_CACHE=1');
+}
