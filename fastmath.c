@@ -1,5 +1,3 @@
-/* fastmath extension for PHP */
-
 #ifdef HAVE_CONFIG_H
 # include "config.h"
 #endif
@@ -12,71 +10,73 @@
 /* For compatibility with older PHP versions */
 #ifndef ZEND_PARSE_PARAMETERS_NONE
 #define ZEND_PARSE_PARAMETERS_NONE() \
-	ZEND_PARSE_PARAMETERS_START(0, 0) \
-	ZEND_PARSE_PARAMETERS_END()
+    ZEND_PARSE_PARAMETERS_START(0, 0) \
+    ZEND_PARSE_PARAMETERS_END()
 #endif
 
-/* {{{ void test1() */
-PHP_FUNCTION(test1)
+static zend_class_entry *math_vector2f_ce;
+
+// ------------------------------------------------------------------
+// Vector2f class
+// ------------------------------------------------------------------
+
+PHP_METHOD(Vector2f, __construct)
 {
-	ZEND_PARSE_PARAMETERS_NONE();
+    double x, y;
 
-	php_printf("The extension %s is loaded and working! ITS SO EASY\r\n", "fastmath");
+    ZEND_PARSE_PARAMETERS_START(2, 2)
+        Z_PARAM_DOUBLE(x)
+        Z_PARAM_DOUBLE(y)
+    ZEND_PARSE_PARAMETERS_END();
+
+    zend_object *obj = Z_OBJ_P(ZEND_THIS);
+    zend_update_property_double(math_vector2f_ce, obj, "x", sizeof("x") - 1, x);
+    zend_update_property_double(math_vector2f_ce, obj, "y", sizeof("y") - 1, y);
 }
-/* }}} */
 
-/* {{{ string test2( [ string $var ] ) */
-PHP_FUNCTION(test2)
+static zend_function_entry vector2f_methods[] = {
+    PHP_ME(Vector2f, __construct, arginfo_math_vector2f_construct, ZEND_ACC_PUBLIC | ZEND_ACC_CTOR)
+    PHP_FE_END
+};
+
+// ------------------------------------------------------------------
+// Module initialization
+// ------------------------------------------------------------------
+PHP_MINIT_FUNCTION(fastmath)
 {
-	char *var = "World";
-	size_t var_len = sizeof("World") - 1;
-	zend_string *retval;
+    zend_class_entry ce;
 
-	ZEND_PARSE_PARAMETERS_START(0, 1)
-		Z_PARAM_OPTIONAL
-		Z_PARAM_STRING(var, var_len)
-	ZEND_PARSE_PARAMETERS_END();
+    INIT_NS_CLASS_ENTRY(ce, "SW\\Math", "Vector2f", vector2f_methods);
+    math_vector2f_ce = zend_register_internal_class(&ce);
 
-	retval = strpprintf(0, "Hello %s", var);
-
-	RETURN_STR(retval);
+    return SUCCESS;
 }
-/* }}}*/
 
-/* {{{ PHP_RINIT_FUNCTION */
-PHP_RINIT_FUNCTION(fastmath)
-{
-#if defined(ZTS) && defined(COMPILE_DL_FASTMATH)
-	ZEND_TSRMLS_CACHE_UPDATE();
-#endif
-
-	return SUCCESS;
-}
-/* }}} */
-
-/* {{{ PHP_MINFO_FUNCTION */
+// ------------------------------------------------------------------
+// Module info
+// ------------------------------------------------------------------
 PHP_MINFO_FUNCTION(fastmath)
 {
-	php_info_print_table_start();
-	php_info_print_table_header(2, "fastmath support", "enabled");
-	php_info_print_table_end();
+    php_info_print_table_start();
+    php_info_print_table_header(2, "fastmath support", "enabled");
+    php_info_print_table_end();
 }
-/* }}} */
 
-/* {{{ fastmath_module_entry */
+// ------------------------------------------------------------------
+// Module entry
+// ------------------------------------------------------------------
 zend_module_entry fastmath_module_entry = {
-	STANDARD_MODULE_HEADER,
-	"fastmath",					/* Extension name */
-	ext_functions,					/* zend_function_entry */
-	NULL,							/* PHP_MINIT - Module initialization */
-	NULL,							/* PHP_MSHUTDOWN - Module shutdown */
-	PHP_RINIT(fastmath),			/* PHP_RINIT - Request initialization */
-	NULL,							/* PHP_RSHUTDOWN - Request shutdown */
-	PHP_MINFO(fastmath),			/* PHP_MINFO - Module info */
-	PHP_FASTMATH_VERSION,		/* Version */
-	STANDARD_MODULE_PROPERTIES
+    STANDARD_MODULE_HEADER,
+    "fastmath",
+    ext_functions,
+    PHP_MINIT(fastmath), // Module initialization
+    NULL, // Module shutdown
+    NULL, // Request initialization
+    NULL, // Request shutdown
+    PHP_MINFO(fastmath), // Module info
+    PHP_FASTMATH_VERSION,
+    STANDARD_MODULE_PROPERTIES
 };
-/* }}} */
 
 #ifdef COMPILE_DL_FASTMATH
 # ifdef ZTS
