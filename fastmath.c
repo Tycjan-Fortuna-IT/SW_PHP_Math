@@ -9,6 +9,7 @@
 #include "zend_smart_str_public.h"
 #include "php_fastmath.h"
 #include "fastmath_arginfo.h"
+#include "mathutils.h"
 
 /* For compatibility with older PHP versions */
 #ifndef ZEND_PARSE_PARAMETERS_NONE
@@ -19,7 +20,9 @@
 
 
 // ------------------------------------------------------------------
-// Vector2f class
+/////////////////////////////////////////////////////////////////////
+// 							Vector2f class
+/////////////////////////////////////////////////////////////////////
 // ------------------------------------------------------------------
 
 static zend_class_entry *vector2f_ce;
@@ -30,24 +33,44 @@ zend_class_entry *get_vector2f_ce() {
 
 static zend_object_handlers vector2f_handlers;
 
+/**
+ * @brief Creates handler for Vector2f class. Is called when a new Vector2f object is created.
+ *        Responsible for allocating memory for the object and initializing the object.
+ *
+ * @param zend_class_entry* class_type
+ * @return zend_object*
+ */
 zend_object *vector2f_create_handler(zend_class_entry *class_type)
 {
-    size_t block_len = sizeof(vector2f_object) + zend_object_properties_size(class_type);
-    vector2f_object *intern = emalloc(block_len);
+	size_t block_len = sizeof(vector2f_object) + zend_object_properties_size(class_type);
+	vector2f_object *intern = emalloc(block_len);
 
-    memset(intern, 0, block_len);
+	memset(intern, 0, block_len);
 
 	intern->x = 0.0f;
 	intern->y = 0.0f;
 
-    zend_object_std_init(&intern->std, class_type);
-    object_properties_init(&intern->std, class_type);
+	zend_object_std_init(&intern->std, class_type);
+	object_properties_init(&intern->std, class_type);
 
-    intern->std.handlers = &vector2f_handlers;
+	intern->std.handlers = &vector2f_handlers;
 
-    return &intern->std;
+	return &intern->std;
 }
 
+/**
+ * @brief Read property handler for Vector2f class. Is called when a property is read from the Vector2f object.
+ * 		  Responsible for returning the value of the property. Only the properties 'x' and 'y' are allowed.
+ * 		  Trying to access any other property will result in a exception.
+ * 		  Type of the property is always double.
+ *
+ * @param zend_object* object
+ * @param zend_string* member
+ * @param int type
+ * @param void** cache_slot
+ * @param zval* rv
+ * @return zval*
+ */
 static zval *vector2f_read_prop_handler(zend_object *object, zend_string *member, int type, void **cache_slot, zval *rv)
 {
     vector2f_object *obj_ptr = vector2f_objptr_from_zend_objptr(object);
@@ -55,11 +78,11 @@ static zval *vector2f_read_prop_handler(zend_object *object, zend_string *member
 	if (type != BP_VAR_R && type != BP_VAR_IS) {
 		zend_throw_error(NULL, "Properties are virtual and cannot be referenced!");
 
-		rv = &EG( uninitialized_zval );
+		rv = &EG(uninitialized_zval);
 	} else {
 
         if (zend_string_equals_literal(member, "x")) {
-		    ZVAL_DOUBLE(rv, obj_ptr->x);
+			ZVAL_DOUBLE(rv, obj_ptr->x);
         }
         else if (zend_string_equals_literal(member, "y")) {
 		    ZVAL_DOUBLE(rv, obj_ptr->y);
@@ -72,6 +95,18 @@ static zval *vector2f_read_prop_handler(zend_object *object, zend_string *member
 	return rv;
 }
 
+/**
+ * @brief Write property handler for Vector2f class. Is called when a property is written to the Vector2f object.
+ * 		  Responsible for writing the value to the property. Only the properties 'x' and 'y' are allowed.
+ * 		  Trying to write to any other property will result in a exception.
+ * 		  Type of the assigned value must be long or double. Otherwise an exception is thrown.
+ *
+ * @param zend_object* object
+ * @param zend_string* member
+ * @param zval* value
+ * @param void** cache_slot
+ * @return zval*
+ */
 static zval *vector2f_write_prop_handler(zend_object *object, zend_string *member, zval *value, void **cache_slot)
 {
     if (Z_TYPE_P(value) == IS_LONG) {
@@ -81,8 +116,7 @@ static zval *vector2f_write_prop_handler(zend_object *object, zend_string *membe
     if (Z_TYPE_P(value) != IS_DOUBLE) {
 		zend_throw_error(NULL, "Inside Vector2f only int and float values can be stored. '$vec[int] = float' or '$vec[int] = int']");
         return value;
-    }
-    else {
+    } else {
         vector2f_object *obj_ptr = vector2f_objptr_from_zend_objptr(object);
 
         if (zend_string_equals_literal(member, "x")) {
@@ -99,6 +133,15 @@ static zval *vector2f_write_prop_handler(zend_object *object, zend_string *membe
 	return value;
 }
 
+/**
+ * @brief Debug info handler for Vector2f class. Is called when a Vector2f object is printed.
+ * 		  Responsible for returning the debug info of the Vector2f object.
+ * 		  The debug info is an array with the keys 'x' and 'y' and the corresponding values.
+ *
+ * @param zend_object* object
+ * @param int* is_temp
+ * @return HashTable*
+ */
 static HashTable *vector2f_debug_info_handler(zend_object *object, int *is_temp)
 {
     vector2f_object *obj_ptr = vector2f_objptr_from_zend_objptr(object);
@@ -116,6 +159,18 @@ static HashTable *vector2f_debug_info_handler(zend_object *object, int *is_temp)
     return ht;
 }
 
+/**
+ * @brief Array get handler for Vector2f class. Is called when a Vector2f object is accessed as an array.
+ * 		  Responsible for returning the value of the array offset. Only the offsets 0 and 1 are allowed.
+ * 		  Trying to access any other offset will result in a exception.
+ * 		  Type of the offset is always long.
+ *
+ * @param zend_object* object
+ * @param zval* offset
+ * @param int type
+ * @param zval* rv
+ * @return zval*
+ */
 zval *vector2f_array_get_handler(zend_object *object, zval *offset, int type, zval *rv)
 {
 	if(offset == NULL) {
@@ -142,6 +197,18 @@ zval *vector2f_array_get_handler(zend_object *object, zval *offset, int type, zv
 	return rv;
 }
 
+/**
+ * @brief Array set handler for Vector2f class. Is called when a Vector2f object is written to as an array.
+ * 		  Responsible for writing the value to the array offset. Only the offsets 0 and 1 are allowed.
+ * 		  Trying to write to any other offset will result in a exception.
+ * 		  Type of the offset is always long.
+ * 		  Type of the assigned value must be long or double. Otherwise an exception is thrown.
+ *
+ * @param zend_object* object
+ * @param zval* offset
+ * @param zval* value
+ * @return void
+ */
 void vector2f_array_set_handler(zend_object *object, zval *offset, zval *value)
 {
 	if (Z_TYPE_P(value) == IS_LONG) {
@@ -163,14 +230,21 @@ void vector2f_array_set_handler(zend_object *object, zval *offset, zval *value)
 	}
 }
 
+/**
+ * @brief Construct a new php method object. Is called when a new Vector2f object is created.
+ * 		  Responsible for initializing the Vector2f object.
+ * 		  The constructor takes 0, 1 or 2 arguments. If 0 arguments are passed, the Vector2f object is initialized with 0.0f.
+ * 		  If 1 argument is passed, the Vector2f object is initialized with the passed value for x and y.
+ * 		  If 2 arguments are passed, the Vector2f object is initialized with the passed values for x and y.
+ */
 PHP_METHOD(Vector2f, __construct)
 {
     zval *obj;
-    obj = getThis();
-    vector2f_object *obj_ptr = vector2f_objptr_from_zend_objptr(Z_OBJ_P(obj));
+    vector2f_object *obj_ptr = vector2f_objptr_from_zend_objptr(Z_OBJ_P(ZEND_THIS));
 
     double x = 0.0;
     double y = 0.0;
+
     if (zend_parse_parameters(ZEND_NUM_ARGS(), "|dd", &x, &y) == FAILURE) {
         return;
     }
@@ -189,6 +263,59 @@ PHP_METHOD(Vector2f, __construct)
     obj_ptr->y = y;
 }
 
+/**
+ * @brief Convert Vector2f object to string.
+ * 		  Responsible for returning the string representation of the Vector2f object.
+ * 		  The string representation is 'vec2(x, y)'.
+ *		  The values of x and y are stringified up to 5 decimal places by default.
+ * 		  The precision can be changed by passing a argument to the method. Goes up to maximum digits of the value.
+ *
+ * @param int ?precision
+ * @return void
+ */
+PHP_METHOD(Vector2f, toString)
+{
+	int precision = 5;
+    if (zend_parse_parameters(ZEND_NUM_ARGS(), "|l", &precision) == FAILURE) {
+        RETURN_NULL();
+    }
+
+	if (precision++ < 0) {
+		zend_throw_error(NULL, "Precision must be a positive integer!");
+		RETURN_NULL();
+	}
+
+	vector2f_object *obj_ptr = vector2f_objptr_from_zend_objptr(Z_OBJ_P(ZEND_THIS));
+
+	smart_str buf = {0};
+
+	smart_str_appends(&buf, "(");
+	smart_str_append_double(&buf, obj_ptr->x, precision, true);
+	smart_str_appends(&buf, ", ");
+	smart_str_append_double(&buf, obj_ptr->y, precision, true);
+	smart_str_appends(&buf, ")");
+	smart_str_0(&buf);
+
+	RETURN_STRINGL(buf.s->val, buf.s->len);
+
+	smart_str_free(&buf);
+}
+
+/**
+ * @brief Calculate the length of the Vector2f object.
+ * 		  Responsible for returning the length of the Vector2f object.
+ * 		  The length is calculated with the formula: sqrt(x^2 + y^2).
+ *
+ * @param void
+ * @return double
+ */
+PHP_METHOD(Vector2f, length)
+{
+	vector2f_object *obj_ptr = vector2f_objptr_from_zend_objptr(Z_OBJ_P(ZEND_THIS));
+
+	RETURN_DOUBLE(VECTOR2_LENGTH(obj_ptr));
+}
+
 // ------------------------------------------------------------------
 // Module initialization
 // ------------------------------------------------------------------
@@ -197,20 +324,20 @@ PHP_MINIT_FUNCTION(fastmath)
 	zend_class_entry tmp_ce;
 
 	INIT_NS_CLASS_ENTRY(tmp_ce, "SW\\Math", "Vector2f", vector2f_methods);
-    vector2f_ce = zend_register_internal_class(&tmp_ce);
-    vector2f_ce->create_object = vector2f_create_handler;
+	vector2f_ce = zend_register_internal_class(&tmp_ce);
+	vector2f_ce->create_object = vector2f_create_handler;
 
-    memcpy(&vector2f_handlers, zend_get_std_object_handlers(), sizeof(vector2f_handlers));
-    vector2f_handlers.get_debug_info = vector2f_debug_info_handler;
-    vector2f_handlers.read_dimension = vector2f_array_get_handler;
-    vector2f_handlers.write_dimension = vector2f_array_set_handler;
+	memcpy(&vector2f_handlers, zend_get_std_object_handlers(), sizeof(vector2f_handlers));
+	vector2f_handlers.get_debug_info = vector2f_debug_info_handler;
+	vector2f_handlers.read_dimension = vector2f_array_get_handler;
+	vector2f_handlers.write_dimension = vector2f_array_set_handler;
 
-    vector2f_handlers.read_property = vector2f_read_prop_handler;
-    vector2f_handlers.write_property = vector2f_write_prop_handler;
-    // vector2f_handlers.do_operation = vector2f_do_op_handler;
-    vector2f_handlers.offset = XtOffsetOf(vector2f_object, std);
+	vector2f_handlers.read_property = vector2f_read_prop_handler;
+	vector2f_handlers.write_property = vector2f_write_prop_handler;
+	// vector2f_handlers.do_operation = vector2f_do_op_handler;
+	vector2f_handlers.offset = XtOffsetOf(vector2f_object, std);
 
-    return SUCCESS;
+	return SUCCESS;
 }
 
 // ------------------------------------------------------------------

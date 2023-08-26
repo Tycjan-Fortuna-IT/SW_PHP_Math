@@ -1,21 +1,21 @@
-@echo off
-set "sourceDir=C:\Users\tycja\Desktop\Libs\php-sdk\php-8.2.9\vs16\x64\php-src\ext\fastmath\x64\Release_TS"
-set "destDir=C:\php\ext"
-set "fileName=php_fastmath.dll"
+@ECHO OFF
+SET "sourceDir=C:\Users\tycja\Desktop\Libs\php-sdk\php-8.2.9\vs16\x64\php-src\ext\fastmath\x64\Release_TS"
+SET "destDir=C:\php\ext"
+SET "fileName=php_fastmath.dll"
 
-if not exist "%sourceDir%\%fileName%" (
-    echo Source file does not exist.
-    exit /b
+IF NOT EXIST "%sourceDir%\%fileName%" (
+    ECHO Source file does not exist.
+    EXIT /b
 )
 
-if not exist "%destDir%" (
-    mkdir "%destDir%"
+IF NOT EXIST "%destDir%" (
+    MKDIR "%destDir%"
 )
 
-copy /y "%sourceDir%\%fileName%" "%destDir%\%fileName%"
+COPY /y "%sourceDir%\%fileName%" "%destDir%\%fileName%"
 
-if %errorlevel% equ 0 (
-    echo File copied successfully.
-) else (
-    echo An error occurred during copying.
+IF %errorlevel% equ 0 (
+    ECHO File copied successfully.
+) ELSE (
+    ECHO An error occurred during copying.
 )
