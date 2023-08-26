@@ -24,14 +24,20 @@ PHP_METHOD(Vector2f, __construct)
 {
     double x, y;
 
-    ZEND_PARSE_PARAMETERS_START(2, 2)
+    ZEND_PARSE_PARAMETERS_START(1, 2)
         Z_PARAM_DOUBLE(x)
-        Z_PARAM_DOUBLE(y)
+        Z_PARAM_OPTIONAL Z_PARAM_DOUBLE(y)
     ZEND_PARSE_PARAMETERS_END();
 
     zend_object *obj = Z_OBJ_P(ZEND_THIS);
-    zend_update_property_double(math_vector2f_ce, obj, "x", sizeof("x") - 1, x);
-    zend_update_property_double(math_vector2f_ce, obj, "y", sizeof("y") - 1, y);
+
+	if (ZEND_NUM_ARGS() == 1) {
+		zend_update_property_double(math_vector2f_ce, obj, "x", sizeof("x") - 1, x);
+		zend_update_property_double(math_vector2f_ce, obj, "y", sizeof("y") - 1, x);
+	} else {
+		zend_update_property_double(math_vector2f_ce, obj, "x", sizeof("x") - 1, x);
+		zend_update_property_double(math_vector2f_ce, obj, "y", sizeof("y") - 1, y);
+	}
 }
 
 static zend_function_entry vector2f_methods[] = {

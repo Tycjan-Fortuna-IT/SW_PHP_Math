@@ -1,9 +1,8 @@
 
-ZEND_BEGIN_ARG_INFO_EX(arginfo_math_vector2f_construct, 0, 0, 2)
+ZEND_BEGIN_ARG_INFO_EX(arginfo_math_vector2f_construct, 0, 0, 1)
     ZEND_ARG_INFO(0, x)
     ZEND_ARG_INFO(0, y)
 ZEND_END_ARG_INFO()
-
 
 static const zend_function_entry ext_functions[] = {
 	// ZEND_FE(test1, arginfo_test1)
