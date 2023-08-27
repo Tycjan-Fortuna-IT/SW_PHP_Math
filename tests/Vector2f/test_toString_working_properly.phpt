@@ -1,5 +1,5 @@
 --TEST--
-Check if Vector2f class toString() method is working as it should.
+Check if toString() method is working as it should.
 For the following cases:
     - Pure method call
     - With 0 precision param

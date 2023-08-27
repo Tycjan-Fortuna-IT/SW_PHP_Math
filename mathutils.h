@@ -7,4 +7,11 @@
 #define VECTOR2_LENGTH(v) \
 	sqrt(v->x * v->x + v->y * v->y)
 
+#define VECTOR2_NORMALIZE(v) \
+	{ \
+		float length = VECTOR2_LENGTH(v); \
+		v->x /= length; \
+		v->y /= length; \
+	}
+
 #endif // MATH_UTILS_H

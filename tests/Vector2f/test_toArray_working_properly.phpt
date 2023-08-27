@@ -1,5 +1,5 @@
 --TEST--
-Check if Vector2f class toArray() method is working as it should.
+Check if toArray() method is working as it should.
 
 
 --EXTENSIONS--

@@ -34,6 +34,28 @@ zend_class_entry *get_vector2f_ce() {
 static zend_object_handlers vector2f_handlers;
 
 /**
+ * @brief Creates a new Vector2f object. Allocates memory for the object and initializes it
+ * 		  with default values. The default values are 0.0f for x and y.
+ *
+ * @param zend_class_entry* ce
+ * @return vector2f_object*
+ */
+static vector2f_object *create_vector2f_object(zend_class_entry *ce)
+{
+    vector2f_object *obj_ptr;
+
+    obj_ptr = ecalloc(1, sizeof(vector2f_object) + zend_object_properties_size(ce));
+
+    zend_object_std_init(&obj_ptr->std, ce);
+    obj_ptr->std.handlers = &vector2f_handlers;
+
+    obj_ptr->x = 0.0;
+    obj_ptr->y = 0.0;
+
+    return obj_ptr;
+}
+
+/**
  * @brief Creates handler for Vector2f class. Is called when a new Vector2f object is created.
  *        Responsible for allocating memory for the object and initializing the object.
  *
@@ -385,6 +407,91 @@ PHP_METHOD(Vector2f, toJSON)
 
 	smart_str_free(&buf);
 }
+
+/**
+ * @brief Negate the Vector2f object.
+ * 		  Responsible for negating the Vector2f object.
+ * 		  The negation is calculated with the formula: Vector2f(-x, -y).
+ *
+ * @return void
+ */
+PHP_METHOD(Vector2f, negate)
+{
+	vector2f_object *obj_ptr = vector2f_objptr_from_zend_objptr(Z_OBJ_P(ZEND_THIS));
+
+	obj_ptr->x = -obj_ptr->x;
+	obj_ptr->y = -obj_ptr->y;
+}
+
+/**
+ * @brief Return new negated Vector2f object.
+ * 		  Responsible for negating the Vector2f object.
+ * 		  The negation is calculated with the formula: Vector2f(-x, -y).
+ *
+ * @param Vector2f vec_to_negate
+ * @return Vector2f
+ */
+PHP_METHOD(Vector2f, negated)
+{
+    zval *vec_to_negate;
+    vector2f_object *obj_ptr, *new_obj_ptr;
+
+    if (zend_parse_parameters(ZEND_NUM_ARGS(), "O", &vec_to_negate, vector2f_ce) == FAILURE) {
+        RETURN_NULL();
+    }
+
+    obj_ptr = vector2f_objptr_from_zend_objptr(Z_OBJ_P(vec_to_negate));
+
+    new_obj_ptr = create_vector2f_object(vector2f_ce);
+
+    new_obj_ptr->x = -obj_ptr->x;
+    new_obj_ptr->y = -obj_ptr->y;
+
+    RETURN_OBJ(&new_obj_ptr->std);
+}
+
+/**
+ * @brief Normalize the Vector2f object.
+ * 		  Responsible for normalizing the Vector2f object.
+ * 		  The normalization is calculated with the formula: Vector2f(x / length, y / length).
+ *
+ */
+PHP_METHOD(Vector2f, normalize)
+{
+	vector2f_object *obj_ptr = vector2f_objptr_from_zend_objptr(Z_OBJ_P(ZEND_THIS));
+
+	VECTOR2_NORMALIZE(obj_ptr);
+}
+
+/**
+ * @brief Return new normalized Vector2f object.
+ * 		  Responsible for normalizing the Vector2f object.
+ * 		  The normalization is calculated with the formula: Vector2f(x / length, y / length).
+ *
+ * @param Vector2f vec_to_normalize
+ * @return Vector2f
+ */
+PHP_METHOD(Vector2f, normalized)
+{
+	zval *vec_to_normalize;
+	vector2f_object *obj_ptr, *new_obj_ptr;
+
+	if (zend_parse_parameters(ZEND_NUM_ARGS(), "O", &vec_to_normalize, vector2f_ce) == FAILURE) {
+		RETURN_NULL();
+	}
+
+	obj_ptr = vector2f_objptr_from_zend_objptr(Z_OBJ_P(vec_to_normalize));
+
+	new_obj_ptr = create_vector2f_object(vector2f_ce);
+
+	new_obj_ptr->x = obj_ptr->x;
+	new_obj_ptr->y = obj_ptr->y;
+
+	VECTOR2_NORMALIZE(new_obj_ptr);
+
+	RETURN_OBJ(&new_obj_ptr->std);
+}
+
 
 // ------------------------------------------------------------------
 // Module initialization

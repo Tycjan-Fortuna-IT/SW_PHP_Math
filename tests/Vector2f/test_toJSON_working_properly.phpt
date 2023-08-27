@@ -1,5 +1,5 @@
 --TEST--
-Check if Vector2f class toJSON() method is working as it should.
+Check if toJSON() method is working as it should.
 
 
 --EXTENSIONS--
@@ -22,23 +22,23 @@ var_dump(json_decode($v3->toJSON()));
 ?>
 
 
---EXPECT--
+--EXPECTF--
 string(22) "{ "x": 1.0, "y": 1.0 }"
 string(23) "{ "x": -1.0, "y": 1.2 }"
 string(26) "{ "x": 3.564, "y": -9.22 }"
-object(stdClass)#4 (2) {
+object(stdClass)#%d (2) {
   ["x"]=>
   float(1)
   ["y"]=>
   float(1)
 }
-object(stdClass)#4 (2) {
+object(stdClass)#%d (2) {
   ["x"]=>
   float(-1)
   ["y"]=>
   float(1.2)
 }
-object(stdClass)#4 (2) {
+object(stdClass)#%d (2) {
   ["x"]=>
   float(3.564)
   ["y"]=>

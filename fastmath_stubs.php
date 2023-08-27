@@ -53,5 +53,37 @@ namespace SW\Math {
          * @return string
          */
         public function toJSON(?int $precision = 0): string {}
+
+        /**
+         * Negates the vector.
+         *
+         * @return void
+         */
+        public function negate(): void {}
+
+        /**
+         * Returns the negated vector.
+         *
+         * @param Vector2f $vector Vector to negate.
+         *
+         * @return Vector2f
+         */
+        public static function negated(Vector2f $vector): Vector2f {}
+
+        /**
+         * Normalizes the vector.
+         *
+         * @return void
+         */
+        public function normalize(): void {}
+
+        /**
+         * Returns the normalized vector.
+         *
+         * @param Vector2f $vector Vector to normalize.
+         *
+         * @return Vector2f
+         */
+        public static function normalized(Vector2f $vector): Vector2f {}
     }
 }

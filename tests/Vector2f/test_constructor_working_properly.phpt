@@ -1,5 +1,5 @@
 --TEST--
-Check if Vector2f class constructor is working as it should.
+Check if constructor is working as it should.
 For the following cases:
     - No arguments
     - One argument (int)
@@ -41,38 +41,38 @@ var_dump($v6);
 ?>
 
 
---EXPECT--
-object(SW\Math\Vector2f)#1 (2) {
+--EXPECTF--
+object(SW\Math\Vector2f)#%d (2) {
   ["x"]=>
   float(0)
   ["y"]=>
   float(0)
 }
-object(SW\Math\Vector2f)#2 (2) {
+object(SW\Math\Vector2f)#%d (2) {
   ["x"]=>
   float(1)
   ["y"]=>
   float(1)
 }
-object(SW\Math\Vector2f)#3 (2) {
+object(SW\Math\Vector2f)#%d (2) {
   ["x"]=>
   float(12.35677)
   ["y"]=>
   float(12.35677)
 }
-object(SW\Math\Vector2f)#4 (2) {
+object(SW\Math\Vector2f)#%d (2) {
   ["x"]=>
   float(1)
   ["y"]=>
   float(1)
 }
-object(SW\Math\Vector2f)#5 (2) {
+object(SW\Math\Vector2f)#%d (2) {
   ["x"]=>
   float(12.35677)
   ["y"]=>
   float(12.35677)
 }
-object(SW\Math\Vector2f)#6 (2) {
+object(SW\Math\Vector2f)#%d (2) {
   ["x"]=>
   float(1)
   ["y"]=>

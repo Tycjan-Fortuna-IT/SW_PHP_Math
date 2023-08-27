@@ -1,5 +1,5 @@
 --TEST--
-Check if Vector2f class property assigment is working as it should.
+Check if property assigment is working as it should.
 For the following cases:
     - x and y as int
     - x and y as float
@@ -66,50 +66,50 @@ var_dump($v8);
 ?>
 
 
---EXPECT--
-object(SW\Math\Vector2f)#1 (2) {
+--EXPECTF--
+object(SW\Math\Vector2f)#%d (2) {
   ["x"]=>
   float(1)
   ["y"]=>
   float(1)
 }
-object(SW\Math\Vector2f)#2 (2) {
+object(SW\Math\Vector2f)#%d (2) {
   ["x"]=>
   float(12.35677)
   ["y"]=>
   float(12.35677)
 }
-object(SW\Math\Vector2f)#3 (2) {
-  ["x"]=>
-  float(1)
-  ["y"]=>
-  float(12.35677)
-}
-object(SW\Math\Vector2f)#4 (2) {
-  ["x"]=>
-  float(12.35677)
-  ["y"]=>
-  float(1)
-}
-object(SW\Math\Vector2f)#5 (2) {
-  ["x"]=>
-  float(1)
-  ["y"]=>
-  float(1)
-}
-object(SW\Math\Vector2f)#6 (2) {
-  ["x"]=>
-  float(12.35677)
-  ["y"]=>
-  float(12.35677)
-}
-object(SW\Math\Vector2f)#7 (2) {
+object(SW\Math\Vector2f)#%d (2) {
   ["x"]=>
   float(1)
   ["y"]=>
   float(12.35677)
 }
-object(SW\Math\Vector2f)#8 (2) {
+object(SW\Math\Vector2f)#%d (2) {
+  ["x"]=>
+  float(12.35677)
+  ["y"]=>
+  float(1)
+}
+object(SW\Math\Vector2f)#%d (2) {
+  ["x"]=>
+  float(1)
+  ["y"]=>
+  float(1)
+}
+object(SW\Math\Vector2f)#%d (2) {
+  ["x"]=>
+  float(12.35677)
+  ["y"]=>
+  float(12.35677)
+}
+object(SW\Math\Vector2f)#%d (2) {
+  ["x"]=>
+  float(1)
+  ["y"]=>
+  float(12.35677)
+}
+object(SW\Math\Vector2f)#%d (2) {
   ["x"]=>
   float(12.35677)
   ["y"]=>

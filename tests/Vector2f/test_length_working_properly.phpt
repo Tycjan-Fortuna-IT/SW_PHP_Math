@@ -1,5 +1,5 @@
 --TEST--
-Check if Vector2f class length() method is working as it should.
+Check if length() method is working as it should.
 
 
 --EXTENSIONS--
