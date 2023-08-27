@@ -1,3 +1,9 @@
+// Macro info
+
+//  ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(identifier, return_reference, required_num_args, type, allow_null)
+//  ZEND_BEGIN_ARG_INFO_EX(identifier, pass_rest_by_reference, return_reference, required_num_args)
+
+
 
 // ------------------------------------------------------------------
 /////////////////////////////////////////////////////////////////////
@@ -30,15 +36,31 @@ ZEND_END_ARG_INFO()
 ZEND_BEGIN_ARG_INFO_EX(arginfo_Vector2f_negate, 0, 0, 0)
 ZEND_END_ARG_INFO()
 
-ZEND_BEGIN_ARG_WITH_RETURN_OBJ_INFO_EX(arginfo_Vector2f_negated, 0, 3, SW\\Math\\Vector2f, 0)
+ZEND_BEGIN_ARG_WITH_RETURN_OBJ_INFO_EX(arginfo_Vector2f_negated, 0, 1, SW\\Math\\Vector2f, 0)
 	ZEND_ARG_OBJ_INFO(0, vector_to_negate, SW\\Math\\Vector2f, 0)
 ZEND_END_ARG_INFO()
 
 ZEND_BEGIN_ARG_INFO_EX(arginfo_Vector2f_normalize, 0, 0, 0)
 ZEND_END_ARG_INFO()
 
-ZEND_BEGIN_ARG_WITH_RETURN_OBJ_INFO_EX(arginfo_Vector2f_normalized, 0, 3, SW\\Math\\Vector2f, 0)
+ZEND_BEGIN_ARG_WITH_RETURN_OBJ_INFO_EX(arginfo_Vector2f_normalized, 0, 1, SW\\Math\\Vector2f, 0)
 	ZEND_ARG_OBJ_INFO(0, vector_to_normalize, SW\\Math\\Vector2f, 0)
+ZEND_END_ARG_INFO()
+
+ZEND_BEGIN_ARG_INFO_EX(arginfo_Vector2f_absolute, 0, 0, 0)
+ZEND_END_ARG_INFO()
+
+ZEND_BEGIN_ARG_WITH_RETURN_OBJ_INFO_EX(arginfo_Vector2f_absoluted, 0, 1, SW\\Math\\Vector2f, 0)
+	ZEND_ARG_OBJ_INFO(0, vector_to_absolute, SW\\Math\\Vector2f, 0)
+ZEND_END_ARG_INFO()
+
+ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_Vector2f_dot, 0, 1, IS_DOUBLE, 0)
+    ZEND_ARG_OBJ_INFO(0, vector_to_dot, SW\\Math\\Vector2f, 0)
+ZEND_END_ARG_INFO()
+
+ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_Vector2f_dotted, 0, 2, IS_DOUBLE, 0)
+	ZEND_ARG_OBJ_INFO(0, vector_first_dot, SW\\Math\\Vector2f, 0)
+	ZEND_ARG_OBJ_INFO(0, vector_second_dot, SW\\Math\\Vector2f, 0)
 ZEND_END_ARG_INFO()
 
 ZEND_METHOD(Vector2f, __construct);
@@ -51,6 +73,10 @@ ZEND_METHOD(Vector2f, negate);
 ZEND_METHOD(Vector2f, negated);
 ZEND_METHOD(Vector2f, normalize);
 ZEND_METHOD(Vector2f, normalized);
+ZEND_METHOD(Vector2f, absolute);
+ZEND_METHOD(Vector2f, absoluted);
+ZEND_METHOD(Vector2f, dot);
+ZEND_METHOD(Vector2f, dotted);
 
 static zend_function_entry vector2f_methods[] = {
     PHP_ME(Vector2f, __construct, arginfo_Vector2f__construct, ZEND_ACC_PUBLIC | ZEND_ACC_CTOR)
@@ -63,9 +89,12 @@ static zend_function_entry vector2f_methods[] = {
 	PHP_ME(Vector2f, negated, arginfo_Vector2f_negated, ZEND_ACC_PUBLIC | ZEND_ACC_STATIC)
 	PHP_ME(Vector2f, normalize, arginfo_Vector2f_normalize, ZEND_ACC_PUBLIC)
 	PHP_ME(Vector2f, normalized, arginfo_Vector2f_normalized, ZEND_ACC_PUBLIC | ZEND_ACC_STATIC)
+	PHP_ME(Vector2f, absolute, arginfo_Vector2f_absolute, ZEND_ACC_PUBLIC)
+	PHP_ME(Vector2f, absoluted, arginfo_Vector2f_absoluted, ZEND_ACC_PUBLIC | ZEND_ACC_STATIC)
+	PHP_ME(Vector2f, dot, arginfo_Vector2f_dot, ZEND_ACC_PUBLIC)
+	PHP_ME(Vector2f, dotted, arginfo_Vector2f_dotted, ZEND_ACC_PUBLIC | ZEND_ACC_STATIC)
     PHP_FE_END
 };
-// ZEND_ARG_TYPE_INFO_WITH_DEFAULT_VALUE(0, y, IS_DOUBLE, 1, 0.0)
 
 static const zend_function_entry ext_functions[] = {
 	ZEND_FE_END

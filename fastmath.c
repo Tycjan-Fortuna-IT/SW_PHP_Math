@@ -492,6 +492,96 @@ PHP_METHOD(Vector2f, normalized)
 	RETURN_OBJ(&new_obj_ptr->std);
 }
 
+/**
+ * @brief Absolute the Vector2f object.
+ * 		  Responsible for absolute the Vector2f object.
+ * 		  The absolute is calculated with the formula: Vector2f(abs(x), abs(y)).
+ *
+ * @return void
+ */
+PHP_METHOD(Vector2f, absolute)
+{
+	vector2f_object *obj_ptr = vector2f_objptr_from_zend_objptr(Z_OBJ_P(ZEND_THIS));
+
+	VECTOR2_ABSOLUTE(obj_ptr);
+}
+
+/**
+ * @brief Return new absoluted Vector2f object.
+ * 		  Responsible for absolute the Vector2f object.
+ * 		  The absolute is calculated with the formula: Vector2f(abs(x), abs(y)).
+ *
+ * @param Vector2f vec_to_absolute
+ * @return Vector2f
+ */
+PHP_METHOD(Vector2f, absoluted)
+{
+	zval *vec_to_absolute;
+	vector2f_object *obj_ptr, *new_obj_ptr;
+
+	if (zend_parse_parameters(ZEND_NUM_ARGS(), "O", &vec_to_absolute, vector2f_ce) == FAILURE) {
+		RETURN_NULL();
+	}
+
+	obj_ptr = vector2f_objptr_from_zend_objptr(Z_OBJ_P(vec_to_absolute));
+
+	new_obj_ptr = create_vector2f_object(vector2f_ce);
+
+	new_obj_ptr->x = obj_ptr->x;
+	new_obj_ptr->y = obj_ptr->y;
+
+	VECTOR2_ABSOLUTE(new_obj_ptr);
+
+	RETURN_OBJ(&new_obj_ptr->std);
+}
+
+/**
+ * @brief Dot the Vector2f object.
+ * 		  Responsible for dot the Vector2f object.
+ * 		  The dot is calculated with the formula: x * x + y * y.
+ *
+ * @param Vector2f vec_to_dot
+ * @return double
+ */
+PHP_METHOD(Vector2f, dot)
+{
+	zval *vec_to_dot;
+	vector2f_object *vec_to_dot_ptr;
+
+	if (zend_parse_parameters(ZEND_NUM_ARGS(), "O", &vec_to_dot, vector2f_ce) == FAILURE) {
+		RETURN_NULL();
+	}
+
+	vec_to_dot_ptr = vector2f_objptr_from_zend_objptr(Z_OBJ_P(vec_to_dot));
+
+	vector2f_object *this_obj_ptr = vector2f_objptr_from_zend_objptr(Z_OBJ_P(ZEND_THIS));
+
+	RETURN_DOUBLE(VECTOR2_DOT(this_obj_ptr, vec_to_dot_ptr));
+}
+
+/**
+ * @brief Dotted the Vector2f object.
+ * 		  Responsible for dotted the Vector2f object.
+ * 		  The dot is calculated with the formula: x1 * x2 + y1 * y2.
+ *
+ * @param Vector2f vec_first_dot
+ * @param Vector2f vec_second_dot
+ * @return double
+ */
+PHP_METHOD(Vector2f, dotted)
+{
+	zval *vec_first_dot, *vec_second_dot;
+	vector2f_object *vec_first_dot_ptr, *vec_second_dot_ptr;
+
+	if (zend_parse_parameters(ZEND_NUM_ARGS(), "OO", &vec_first_dot, vector2f_ce, &vec_second_dot, vector2f_ce) == FAILURE) {
+		RETURN_NULL();
+	}
+
+	vec_first_dot_ptr = vector2f_objptr_from_zend_objptr(Z_OBJ_P(vec_first_dot));
+	vec_second_dot_ptr = vector2f_objptr_from_zend_objptr(Z_OBJ_P(vec_second_dot));
+
+	RETURN_DOUBLE(VECTOR2_DOT(vec_first_dot_ptr, vec_second_dot_ptr));
+}
 
 // ------------------------------------------------------------------
 // Module initialization

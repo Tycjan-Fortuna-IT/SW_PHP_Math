@@ -125,6 +125,68 @@ The PHP stubs file is located in the `fastmath_stubs.php` file. It contains all 
         $v = Vector2f::normalized(new Vector2f(-1, 1.2)); // (-0.427, 0.904)
         ```
 
+    - `absolute(): void` - Converts all the vector properties to their absolute values.
+        ```php
+        $v = new Vector2f(-1, -1.2); // (-1, -1.2)
+
+        $v->absolute(); // (1, 1.2)
+        ```
+
+    - `Vector2f::absoluted(Vector2f $vector): Vector2f` - Returns new vector that has all the properties converted to their absolute values.
+        ```php
+        $v = Vector2f::absoluted(new Vector2f(-1, -1.2)); // (1, 1.2)
+        ```
+
+    - `dot(Vector2f $vector): float` - Returns the dot product of the given vectors.
+        ```php
+        $v = new Vector2f(-1, 1.2); // (-1, 1.2)
+
+        $f = $v->dot(new Vector2f(9.23, 0)); // -9.23
+        ```
+
+    - `Vector2f::dotted(Vector2f $vector1, Vector2f $vector2): float` - Returns the dot product of the given vectors.
+        ```php
+        $f = Vector2f::dotted(new Vector2f(-1, 1.2), new Vector2f(9.23, 0)); // -9.23
+        ```
+
+    - `angleBetween(Vector2f $vector): float` - Returns the angle between the given vectors. Returns the angle in radians.
+        ```php
+        $v = new Vector2f(-1, 1.2); // (-1, 1.2)
+
+        $f = $v->angleBetween(new Vector2f(9.23, 0)); // 3.1415926535897931 ...
+        ```
+
+    - `Vector2f::angleBetweenVectors(Vector2f $vector1, Vector2f $vector2): float` - Returns the angle between the given vectors. Returns the angle in radians.
+        ```php
+        $f = Vector2f::angleBetweenVectors(new Vector2f(-1, 1.2), new Vector2f(9.23, 0)); // 3.1415926535897931 ...
+        ```
+
+    - `angleBetweenDeg(Vector2f $vector): float` - Returns the angle between the given vectors. Returns the angle in degrees.
+        ```php
+        $v = new Vector2f(-1, 1.2); // (-1, 1.2)
+
+        $f = $v->angleBetweenDeg(new Vector2f(9.23, 0)); // 180
+        ```
+
+    - `Vector2f::angleBetweenVectorsDeg(Vector2f $vector1, Vector2f $vector2): float` - Returns the angle between the given vectors. Returns the angle in degrees.
+        ```php
+        $f = Vector2f::angleBetweenVectorsDeg(new Vector2f(-1, 1.2), new Vector2f(9.23, 0)); // 180
+        ```
+
+    - `equals(Vector2f $vector): bool` - Returns true if the given vector is equal to the current vector.
+        ```php
+        $v = new Vector2f(-1, 1.2); // (-1, 1.2)
+
+        $v->equals(new Vector2f(9.23, 0)); // false
+        $v->equals(new Vector2f(0.427, -0.904)); // true
+        ```
+
+    - `Vector2f::equalVectors(Vector2f $vector1, Vector2f $vector2): bool` - Returns true if the given vectors are equal.
+        ```php
+        $v = Vector2f::equalVectors(new Vector2f(-1, 1.2), new Vector2f(9.23, 0)); // false
+        $v = Vector2f::equalVectors(new Vector2f(0.427, -0.904), new Vector2f(0.427, -0.904)); // true
+        ```
+
     <!-- ### Vector operations
     ```php
     $vector = new Vector2f(-1, 2.3445667); // (-1, 2.3445667)
@@ -132,11 +194,6 @@ The PHP stubs file is located in the `fastmath_stubs.php` file. It contains all 
     $vector->sub(new Vector2f(9.23, 0)); // (-10.23, 2.3445667)
     $vector->mul(new Vector2f(9.23, 0)); // (-9.23, 0)
     $vector->div(new Vector2f(9.23, 0)); // (-0.1085, INF)
-    $vector->dot(new Vector2f(9.23, 0)); // -9.23
-    $vector->cross(new Vector2f(9.23, 0)); // 0
-    $vector->normalize(); // (-0.427, 0.904)
-    $vector->equals(new Vector2f(9.23, 0)); // false
-    $vector->equals(new Vector2f(0.427, -0.904)); // true
     ``` -->
 
     ### Illegal moves

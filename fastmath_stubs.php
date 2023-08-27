@@ -6,10 +6,10 @@ namespace SW\Math {
         /**
          * Creates a new instance of Vector2f.
          *
-         * @param float $x X coordinate of the vector.
-         * @param float $y Y coordinate of the vector.
+         * @param ?float $x X coordinate of the vector.
+         * @param ?float $y Y coordinate of the vector.
          */
-        public function __construct(public float $x = 0.0, public float $y = 0.0) {}
+        public function __construct(public ?float $x = 0.0, public ?float $y = 0.0) {}
 
         /**
          * Returns a string representation of the vector.
@@ -85,5 +85,40 @@ namespace SW\Math {
          * @return Vector2f
          */
         public static function normalized(Vector2f $vector): Vector2f {}
+
+        /**
+         * Absolute the vector.
+         *
+         * @return void
+         */
+        public function absolute(): void {}
+
+        /**
+         * Returns the absolute vector.
+         *
+         * @param Vector2f $vector Vector to absolute.
+         *
+         * @return Vector2f
+         */
+        public static function absoluted(Vector2f $vector): Vector2f {}
+
+        /**
+         * Dot product of two vectors.
+         *
+         * @param Vector2f $vector Vector to dot.
+         *
+         * @return float
+         */
+        public function dot(Vector2f $vector): float {}
+
+        /**
+         * Returns the dot product of two vectors.
+         *
+         * @param Vector2f $vector1 First vector.
+         * @param Vector2f $vector2 Second vector.
+         *
+         * @return float
+         */
+        public static function dotted(Vector2f $vector1, Vector2f $vector2): float {}
     }
 }

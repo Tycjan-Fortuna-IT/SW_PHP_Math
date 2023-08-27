@@ -14,4 +14,13 @@
 		v->y /= length; \
 	}
 
+#define VECTOR2_ABSOLUTE(v) \
+	{ \
+		v->x = fabs(v->x); \
+		v->y = fabs(v->y); \
+	}
+
+#define VECTOR2_DOT(v1, v2) \
+	(v1->x * v2->x + v1->y * v2->y)
+
 #endif // MATH_UTILS_H
