@@ -276,6 +276,7 @@ PHP_METHOD(Vector2f, __construct)
 PHP_METHOD(Vector2f, toString)
 {
 	int precision = 5;
+
     if (zend_parse_parameters(ZEND_NUM_ARGS(), "|l", &precision) == FAILURE) {
         RETURN_NULL();
     }
@@ -306,7 +307,6 @@ PHP_METHOD(Vector2f, toString)
  * 		  Responsible for returning the length of the Vector2f object.
  * 		  The length is calculated with the formula: sqrt(x^2 + y^2).
  *
- * @param void
  * @return double
  */
 PHP_METHOD(Vector2f, length)
@@ -314,6 +314,76 @@ PHP_METHOD(Vector2f, length)
 	vector2f_object *obj_ptr = vector2f_objptr_from_zend_objptr(Z_OBJ_P(ZEND_THIS));
 
 	RETURN_DOUBLE(VECTOR2_LENGTH(obj_ptr));
+}
+
+/**
+ * @brief Calculate the squared length of the Vector2f object.
+ * 		  Responsible for returning the squared length of the Vector2f object.
+ * 		  The squared length is calculated with the formula: x^2 + y^2.
+ *
+ * @return double
+ */
+PHP_METHOD(Vector2f, lengthSquared)
+{
+	vector2f_object *obj_ptr = vector2f_objptr_from_zend_objptr(Z_OBJ_P(ZEND_THIS));
+
+	RETURN_DOUBLE(VECTOR2_SQUARE_LENGTH(obj_ptr));
+}
+
+/**
+ * @brief Convert Vector2f object to array.
+ * 		  Responsible for returning the array representation of the Vector2f object.
+ * 		  The array representation is [0 => x, 1 => y].
+ *
+ * @return array
+ */
+PHP_METHOD(Vector2f, toArray)
+{
+	vector2f_object *obj_ptr = vector2f_objptr_from_zend_objptr(Z_OBJ_P(ZEND_THIS));
+
+	array_init(return_value);
+
+	add_next_index_double(return_value, obj_ptr->x);
+	add_next_index_double(return_value, obj_ptr->y);
+}
+
+/**
+ * @brief Convert Vector2f object to JSON string.
+ * 		  Responsible for returning the JSON string representation of the Vector2f object.
+ * 		  The JSON string representation is { "x": x, "y": y }.
+ *		  The values of x and y are stringified up to 5 decimal places by default.
+ * 		  The precision can be changed by passing a argument to the method. Goes up to maximum digits of the value.
+ *
+ * @param int ?precision
+ * @return string
+ */
+PHP_METHOD(Vector2f, toJSON)
+{
+	int precision = 5;
+
+    if (zend_parse_parameters(ZEND_NUM_ARGS(), "|l", &precision) == FAILURE) {
+        RETURN_NULL();
+    }
+
+	if (precision++ < 0) {
+		zend_throw_error(NULL, "Precision must be a positive integer!");
+		RETURN_NULL();
+	}
+
+	vector2f_object *obj_ptr = vector2f_objptr_from_zend_objptr(Z_OBJ_P(ZEND_THIS));
+
+	smart_str buf = {0};
+
+	smart_str_appends(&buf, "{ \"x\": ");
+	smart_str_append_double(&buf, obj_ptr->x, precision, true);
+	smart_str_appends(&buf, ", \"y\": ");
+	smart_str_append_double(&buf, obj_ptr->y, precision, true);
+	smart_str_appends(&buf, " }");
+	smart_str_0(&buf);
+
+	RETURN_STRINGL(buf.s->val, buf.s->len);
+
+	smart_str_free(&buf);
 }
 
 // ------------------------------------------------------------------
