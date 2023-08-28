@@ -1,5 +1,5 @@
 --TEST--
-Check if Vector2f class lengthSquared() method is working as it should.
+Check if lengthSquared() method is working as it should.
 
 
 --EXTENSIONS--

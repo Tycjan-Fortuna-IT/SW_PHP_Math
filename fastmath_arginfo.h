@@ -1,5 +1,4 @@
 // Macro info
-
 //  ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(identifier, return_reference, required_num_args, type, allow_null)
 //  ZEND_BEGIN_ARG_INFO_EX(identifier, pass_rest_by_reference, return_reference, required_num_args)
 
@@ -63,6 +62,33 @@ ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_Vector2f_dotted, 0, 2, IS_DOUBLE
 	ZEND_ARG_OBJ_INFO(0, vector_second_dot, SW\\Math\\Vector2f, 0)
 ZEND_END_ARG_INFO()
 
+ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_Vector2f_angleBetween, 0, 1, IS_DOUBLE, 0)
+    ZEND_ARG_OBJ_INFO(0, vector_to_angle, SW\\Math\\Vector2f, 0)
+ZEND_END_ARG_INFO()
+
+ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_Vector2f_angleBetweenVectors, 0, 2, IS_DOUBLE, 0)
+	ZEND_ARG_OBJ_INFO(0, vector_first_angle, SW\\Math\\Vector2f, 0)
+	ZEND_ARG_OBJ_INFO(0, vector_second_angle, SW\\Math\\Vector2f, 0)
+ZEND_END_ARG_INFO()
+
+ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_Vector2f_angleBetweenDeg, 0, 1, IS_DOUBLE, 0)
+    ZEND_ARG_OBJ_INFO(0, vector_to_angle, SW\\Math\\Vector2f, 0)
+ZEND_END_ARG_INFO()
+
+ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_Vector2f_angleBetweenVectorsDeg, 0, 2, IS_DOUBLE, 0)
+	ZEND_ARG_OBJ_INFO(0, vector_first_angle, SW\\Math\\Vector2f, 0)
+	ZEND_ARG_OBJ_INFO(0, vector_second_angle, SW\\Math\\Vector2f, 0)
+ZEND_END_ARG_INFO()
+
+ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_Vector2f_equals, 0, 1, _IS_BOOL, 0)
+	ZEND_ARG_OBJ_INFO(0, vector_to_compare, SW\\Math\\Vector2f, 0)
+ZEND_END_ARG_INFO()
+
+ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_Vector2f_equalVectors, 0, 2, _IS_BOOL, 0)
+	ZEND_ARG_OBJ_INFO(0, vector_first_compare, SW\\Math\\Vector2f, 0)
+	ZEND_ARG_OBJ_INFO(0, vector_second_compare, SW\\Math\\Vector2f, 0)
+ZEND_END_ARG_INFO()
+
 ZEND_METHOD(Vector2f, __construct);
 ZEND_METHOD(Vector2f, toString);
 ZEND_METHOD(Vector2f, length);
@@ -77,6 +103,12 @@ ZEND_METHOD(Vector2f, absolute);
 ZEND_METHOD(Vector2f, absoluted);
 ZEND_METHOD(Vector2f, dot);
 ZEND_METHOD(Vector2f, dotted);
+ZEND_METHOD(Vector2f, angleBetween);
+ZEND_METHOD(Vector2f, angleBetweenVectors);
+ZEND_METHOD(Vector2f, angleBetweenDeg);
+ZEND_METHOD(Vector2f, angleBetweenVectorsDeg);
+ZEND_METHOD(Vector2f, equals);
+ZEND_METHOD(Vector2f, equalVectors);
 
 static zend_function_entry vector2f_methods[] = {
     PHP_ME(Vector2f, __construct, arginfo_Vector2f__construct, ZEND_ACC_PUBLIC | ZEND_ACC_CTOR)
@@ -93,6 +125,12 @@ static zend_function_entry vector2f_methods[] = {
 	PHP_ME(Vector2f, absoluted, arginfo_Vector2f_absoluted, ZEND_ACC_PUBLIC | ZEND_ACC_STATIC)
 	PHP_ME(Vector2f, dot, arginfo_Vector2f_dot, ZEND_ACC_PUBLIC)
 	PHP_ME(Vector2f, dotted, arginfo_Vector2f_dotted, ZEND_ACC_PUBLIC | ZEND_ACC_STATIC)
+	PHP_ME(Vector2f, angleBetween, arginfo_Vector2f_angleBetween, ZEND_ACC_PUBLIC)
+	PHP_ME(Vector2f, angleBetweenVectors, arginfo_Vector2f_angleBetweenVectors, ZEND_ACC_PUBLIC | ZEND_ACC_STATIC)
+	PHP_ME(Vector2f, angleBetweenDeg, arginfo_Vector2f_angleBetweenDeg, ZEND_ACC_PUBLIC)
+	PHP_ME(Vector2f, angleBetweenVectorsDeg, arginfo_Vector2f_angleBetweenVectorsDeg, ZEND_ACC_PUBLIC | ZEND_ACC_STATIC)
+	PHP_ME(Vector2f, equals, arginfo_Vector2f_equals, ZEND_ACC_PUBLIC)
+	PHP_ME(Vector2f, equalVectors, arginfo_Vector2f_equalVectors, ZEND_ACC_PUBLIC | ZEND_ACC_STATIC)
     PHP_FE_END
 };
 

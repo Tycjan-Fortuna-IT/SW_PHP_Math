@@ -1,5 +1,5 @@
 --TEST--
-Check if dot() method is working as it should.
+Check if dot(Vector2f) method is working as it should.
 
 
 --EXTENSIONS--

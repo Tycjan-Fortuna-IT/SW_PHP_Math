@@ -1,5 +1,5 @@
 --TEST--
-Check if Vector2f::dotted() method is working as it should.
+Check if Vector2f::dotted(Vector2f, Vector2f) method is working as it should.
 
 
 --EXTENSIONS--

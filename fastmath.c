@@ -419,8 +419,7 @@ PHP_METHOD(Vector2f, negate)
 {
 	vector2f_object *obj_ptr = vector2f_objptr_from_zend_objptr(Z_OBJ_P(ZEND_THIS));
 
-	obj_ptr->x = -obj_ptr->x;
-	obj_ptr->y = -obj_ptr->y;
+	VECTOR2_NEGATE(obj_ptr);
 }
 
 /**
@@ -581,6 +580,154 @@ PHP_METHOD(Vector2f, dotted)
 	vec_second_dot_ptr = vector2f_objptr_from_zend_objptr(Z_OBJ_P(vec_second_dot));
 
 	RETURN_DOUBLE(VECTOR2_DOT(vec_first_dot_ptr, vec_second_dot_ptr));
+}
+
+/**
+ * @brief Angle between this and the second Vector2f object.
+ * 		  Responsible for angle between this vector and second passed Vector2f object.
+ * 		  The angle is calculated with the formula: acos(dot(this, vec) / (length(this) * length(vec))).
+ * 		  The angle is returned in radians.
+ *
+ * @param Vector2f vec_to_angle
+ * @return double
+ */
+PHP_METHOD(Vector2f, angleBetween)
+{
+	zval* vec_to_angle;
+	vector2f_object *vec_to_angle_ptr;
+
+	if (zend_parse_parameters(ZEND_NUM_ARGS(), "O", &vec_to_angle, vector2f_ce) == FAILURE) {
+		RETURN_NULL();
+	}
+
+	vec_to_angle_ptr = vector2f_objptr_from_zend_objptr(Z_OBJ_P(vec_to_angle));
+
+	vector2f_object *this_obj_ptr = vector2f_objptr_from_zend_objptr(Z_OBJ_P(ZEND_THIS));
+
+	RETURN_DOUBLE(VECTOR2_ANGLE_BETWEEN(this_obj_ptr, vec_to_angle_ptr));
+}
+
+/**
+ * @brief Angle between the first and second Vector2f object.
+ * 		  Responsible for angle between first and second passed Vector2f object.
+ * 		  The angle is calculated with the formula: acos(dot(vec1, vec2) / (length(vec1) * length(vec2))).
+ * 		  The angle is returned in radians.
+ *
+ * @param Vector2f vec_first_angle
+ * @param Vector2f vec_second_angle
+ * @return double
+ */
+PHP_METHOD(Vector2f, angleBetweenVectors)
+{
+	zval* vec_first_angle, *vec_second_angle;
+	vector2f_object *vec_first_angle_ptr, *vec_second_angle_ptr;
+
+	if (zend_parse_parameters(ZEND_NUM_ARGS(), "OO", &vec_first_angle, vector2f_ce, &vec_second_angle, vector2f_ce) == FAILURE) {
+		RETURN_NULL();
+	}
+
+	vec_first_angle_ptr = vector2f_objptr_from_zend_objptr(Z_OBJ_P(vec_first_angle));
+	vec_second_angle_ptr = vector2f_objptr_from_zend_objptr(Z_OBJ_P(vec_second_angle));
+
+	RETURN_DOUBLE(VECTOR2_ANGLE_BETWEEN(vec_first_angle_ptr, vec_second_angle_ptr));
+}
+
+/**
+ * @brief Angle between this and the second Vector2f object.
+ * 		  Responsible for angle between this vector and second passed Vector2f object.
+ * 		  The angle is calculated with the formula: acos(dot(this, vec) / (length(this) * length(vec))).
+ * 		  The angle is returned in degrees.
+ *
+ * @param Vector2f vec_to_angle
+ * @return double
+ */
+PHP_METHOD(Vector2f, angleBetweenDeg)
+{
+	zval* vec_to_angle;
+	vector2f_object *vec_to_angle_ptr;
+
+	if (zend_parse_parameters(ZEND_NUM_ARGS(), "O", &vec_to_angle, vector2f_ce) == FAILURE) {
+		RETURN_NULL();
+	}
+
+	vec_to_angle_ptr = vector2f_objptr_from_zend_objptr(Z_OBJ_P(vec_to_angle));
+
+	vector2f_object *this_obj_ptr = vector2f_objptr_from_zend_objptr(Z_OBJ_P(ZEND_THIS));
+
+	RETURN_DOUBLE(RAD_TO_DEG(VECTOR2_ANGLE_BETWEEN(this_obj_ptr, vec_to_angle_ptr)));
+}
+
+/**
+ * @brief Angle between the first and second Vector2f object.
+ * 		  Responsible for angle between first and second passed Vector2f object.
+ * 		  The angle is calculated with the formula: acos(dot(vec1, vec2) / (length(vec1) * length(vec2))).
+ * 		  The angle is returned in degrees.
+ *
+ * @param Vector2f vec_first_angle
+ * @param Vector2f vec_second_angle
+ * @return double
+ */
+PHP_METHOD(Vector2f, angleBetweenVectorsDeg)
+{
+	zval* vec_first_angle, *vec_second_angle;
+	vector2f_object *vec_first_angle_ptr, *vec_second_angle_ptr;
+
+	if (zend_parse_parameters(ZEND_NUM_ARGS(), "OO", &vec_first_angle, vector2f_ce, &vec_second_angle, vector2f_ce) == FAILURE) {
+		RETURN_NULL();
+	}
+
+	vec_first_angle_ptr = vector2f_objptr_from_zend_objptr(Z_OBJ_P(vec_first_angle));
+	vec_second_angle_ptr = vector2f_objptr_from_zend_objptr(Z_OBJ_P(vec_second_angle));
+
+	RETURN_DOUBLE(RAD_TO_DEG(VECTOR2_ANGLE_BETWEEN(vec_first_angle_ptr, vec_second_angle_ptr)));
+}
+
+/**
+ * @brief Check if the Vector2f object is equal to the second Vector2f object.
+ * 		  Responsible for checking if the Vector2f object is equal to the second Vector2f object. (Dont use == operator)
+ * 		  The equality is calculated with the formula: x1 == x2 && y1 == y2.
+ *
+ * @param Vector2f vec_to_check
+ * @return bool
+ */
+PHP_METHOD(Vector2f, equals)
+{
+	zval* vec_to_check;
+	vector2f_object *vec_to_check_ptr;
+
+	if (zend_parse_parameters(ZEND_NUM_ARGS(), "O", &vec_to_check, vector2f_ce) == FAILURE) {
+		RETURN_NULL();
+	}
+
+	vec_to_check_ptr = vector2f_objptr_from_zend_objptr(Z_OBJ_P(vec_to_check));
+
+	vector2f_object *this_obj_ptr = vector2f_objptr_from_zend_objptr(Z_OBJ_P(ZEND_THIS));
+
+	RETURN_BOOL(VECTOR2_EQUALS(this_obj_ptr, vec_to_check_ptr));
+}
+
+/**
+ * @brief Check if the first Vector2f object is equal to the second Vector2f object.
+ * 		  Responsible for checking if the first Vector2f object is equal to the second Vector2f object. (Dont use == operator)
+ * 		  The equality is calculated with the formula: x1 == x2 && y1 == y2.
+ *
+ * @param Vector2f vec_first_check
+ * @param Vector2f vec_second_check
+ * @return bool
+ */
+PHP_METHOD(Vector2f, equalVectors)
+{
+	zval* vec_first_check, *vec_second_check;
+	vector2f_object *vec_first_check_ptr, *vec_second_check_ptr;
+
+	if (zend_parse_parameters(ZEND_NUM_ARGS(), "OO", &vec_first_check, vector2f_ce, &vec_second_check, vector2f_ce) == FAILURE) {
+		RETURN_NULL();
+	}
+
+	vec_first_check_ptr = vector2f_objptr_from_zend_objptr(Z_OBJ_P(vec_first_check));
+	vec_second_check_ptr = vector2f_objptr_from_zend_objptr(Z_OBJ_P(vec_second_check));
+
+	RETURN_BOOL(VECTOR2_EQUALS(vec_first_check_ptr, vec_second_check_ptr));
 }
 
 // ------------------------------------------------------------------

@@ -120,5 +120,64 @@ namespace SW\Math {
          * @return float
          */
         public static function dotted(Vector2f $vector1, Vector2f $vector2): float {}
+
+        /**
+         * Returns the angle between this vector and another vector.
+         * The angle is in radians.
+         *
+         * @param Vector2f $vector Vector to get the angle.
+         *
+         * @return float
+         */
+        public function angleBetween(Vector2f $vector): float {}
+
+        /**
+         * Returns the angle between two vectors. The angle is in radians.
+         *
+         * @param Vector2f $vector1 First vector.
+         * @param Vector2f $vector2 Second vector.
+         *
+         * @return float
+         */
+        public static function angleBetweenVectors(Vector2f $vector1, Vector2f $vector2): float {}
+
+        /**
+         * Returns the angle between this vector and another vector.
+         * The angle is in degrees.
+         *
+         * @param Vector2f $vector Vector to get the angle.
+         *
+         * @return float
+         */
+        public function angleBetweenDeg(Vector2f $vector): float {}
+
+        /**
+         * Returns the angle between two vectors. The angle is in degrees.
+         *
+         * @param Vector2f $vector1 First vector.
+         * @param Vector2f $vector2 Second vector.
+         *
+         * @return float
+         */
+        public static function angleBetweenVectorsDeg(Vector2f $vector1, Vector2f $vector2): float {}
+
+        /**
+         * Check if both vectors are equal. Casual == operator is not recommended.
+         *
+         * @param Vector2f $vector Vector to check.
+         *
+         * @return bool
+         */
+        public function equals(Vector2f $vector): bool {}
+
+        /**
+         * Check if two vectors are equal. Casual == operator is not recommended.
+         *
+         * @param Vector2f $vector1 First vector.
+         * @param Vector2f $vector2 Second vector.
+         *
+         * @return bool
+         */
+        public static function equalVectors(Vector2f $vector1, Vector2f $vector2): bool {}
     }
 }

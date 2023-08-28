@@ -10,6 +10,11 @@ The PHP stubs file is located in the `fastmath_stubs.php` file. It contains all 
 
 - # Classes
 
+    <!-- - ### [Vector2i](#vector2i) -->
+    - ### [Vector2f](#vector2f)
+
+    ---
+
     - ## `Vector2f`
     ```php
     Vector2f::class
@@ -56,7 +61,7 @@ The PHP stubs file is located in the `fastmath_stubs.php` file. It contains all 
     $vector[1] = 9.23; // (0, 9.23)
     ```
 
-    ### Vector methods
+    ### Vector2f methods
 
     - `toString(?int precision = 5): string` - Returns a string representation of the vector. The precision parameter is optional and it's default value is 5.
         ```php
@@ -187,14 +192,113 @@ The PHP stubs file is located in the `fastmath_stubs.php` file. It contains all 
         $v = Vector2f::equalVectors(new Vector2f(0.427, -0.904), new Vector2f(0.427, -0.904)); // true
         ```
 
-    <!-- ### Vector operations
-    ```php
-    $vector = new Vector2f(-1, 2.3445667); // (-1, 2.3445667)
-    $vector->add(new Vector2f(9.23, 0)); // (8.23, 2.3445667)
-    $vector->sub(new Vector2f(9.23, 0)); // (-10.23, 2.3445667)
-    $vector->mul(new Vector2f(9.23, 0)); // (-9.23, 0)
-    $vector->div(new Vector2f(9.23, 0)); // (-0.1085, INF)
-    ``` -->
+    - `distanceBetween(Vector2f $vector): float` - Returns the distance between the given vectors.
+        ```php
+        $v = new Vector2f(-1, 1.2); // (-1, 1.2)
+
+        $f = $v->distanceBetween(new Vector2f(9.23, 0)); // 10.23
+        ```
+
+    - `Vector2f::distanceBetweenVectors(Vector2f $vector1, Vector2f $vector2): float` - Returns the distance between the given vectors.
+        ```php
+        $f = Vector2f::distanceBetweenVectors(new Vector2f(-1, 1.2), new Vector2f(9.23, 0)); // 10.23
+        ```
+
+    - `distanceBetweenSquared(Vector2f $vector): float` - Returns the squared distance between the given vectors.
+        ```php
+        $v = new Vector2f(-1, 1.2); // (-1, 1.2)
+
+        $f = $v->distanceBetweenSquared(new Vector2f(9.23, 0)); // 104.6529
+        ```
+
+    - `Vector2f::distanceBetweenVectorsSquared(Vector2f $vector1, Vector2f $vector2): float` - Returns the squared distance between the given vectors.
+        ```php
+        $f = Vector2f::distanceBetweenVectorsSquared(new Vector2f(-1, 1.2), new Vector2f(9.23, 0)); // 104.6529
+        ```
+
+    - `scale(float $scale): void` - Scales the vector by the given scale.
+        ```php
+        $v = new Vector2f(-1, 1.2); // (-1, 1.2)
+
+        $v->scale(2); // (-2, 2.4)
+        ```
+
+    - `Vector2f::scaled(Vector2f $vector, float $scale): Vector2f` - Returns new vector that is scaled by the given scale.
+        ```php
+        $v = Vector2f::scaled(new Vector2f(-1, 1.2), 2); // (-2, 2.4)
+        ```
+
+    - `lerp(Vector2f $vector, float $t): void` - Linearly interpolates between the current vector and the given vector by the given t value. Factor t is clamped to the range [0, 1].
+        ```php
+        $v = new Vector2f(-1, 1.2); // (-1, 1.2)
+
+        $v->lerp(new Vector2f(9.23, 0), 0.5); // (4.115, 0.6)
+        ```
+
+    - `Vector2f::lerped(Vector2f $vector1, Vector2f $vector2, float $t): Vector2f` - Returns new vector that is linearly interpolated between the given vectors by the given t value. Factor t is clamped to the range [0, 1].
+        ```php
+        $v = Vector2f::lerped(new Vector2f(-1, 1.2), new Vector2f(9.23, 0), 0.5); // (4.115, 0.6)
+        ```
+
+    - `slerp(Vector2f $vector, float $t): void` - Spherically interpolates between the current vector and the given vector by the given t value. Factor t is clamped to the range [0, 1].
+        ```php
+        $v = new Vector2f(-1, 1.2); // (-1, 1.2)
+
+        $v->slerp(new Vector2f(9.23, 0), 0.5); // (0.427, -0.904)
+        ```
+
+    - `Vector2f::slerped(Vector2f $vector1, Vector2f $vector2, float $t): Vector2f` - Returns new vector that is spherically interpolated between the given vectors by the given t value. Factor t is clamped to the range [0, 1].
+        ```php
+        $v = Vector2f::slerped(new Vector2f(-1, 1.2), new Vector2f(9.23, 0), 0.5); // (0.427, -0.904)
+        ```
+
+    - `add(Vector2f $vector): void` - Adds the given vector to the current vector.
+        ```php
+        $v = new Vector2f(-1, 1.2); // (-1, 1.2)
+
+        $v->add(new Vector2f(9.23, 0)); // (8.23, 1.2)
+        ```
+
+    - `Vector2f::added(Vector2f $vector1, Vector2f $vector2): Vector2f` - Returns new vector that is the sum of the given vectors.
+        ```php
+        $v = Vector2f::added(new Vector2f(-1, 1.2), new Vector2f(9.23, 0)); // (8.23, 1.2)
+        ```
+
+    - `sub(Vector2f $vector): void` - Subtracts the given vector from the current vector.
+        ```php
+        $v = new Vector2f(-1, 1.2); // (-1, 1.2)
+
+        $v->sub(new Vector2f(9.23, 0)); // (-10.23, 1.2)
+        ```
+
+    - `Vector2f::subtracted(Vector2f $vector1, Vector2f $vector2): Vector2f` - Returns new vector that is the difference of the given vectors.
+        ```php
+        $v = Vector2f::subtracted(new Vector2f(-1, 1.2), new Vector2f(9.23, 0)); // (-10.23, 1.2)
+        ```
+
+    - `mul(Vector2f $vector): void` - Multiplies the given vector with the current vector.
+        ```php
+        $v = new Vector2f(-1, 1.2); // (-1, 1.2)
+
+        $v->mul(new Vector2f(9.23, 0)); // (-9.23, 0)
+        ```
+
+    - `Vector2f::multiplied(Vector2f $vector1, Vector2f $vector2): Vector2f` - Returns new vector that is the product of the given vectors.
+        ```php
+        $v = Vector2f::multiplied(new Vector2f(-1, 1.2), new Vector2f(9.23, 0)); // (-9.23, 0)
+        ```
+
+    - `div(Vector2f $vector): void` - Divides the current vector by the given vector.
+        ```php
+        $v = new Vector2f(-1, 1.2); // (-1, 1.2)
+
+        $v->div(new Vector2f(9.23, 0)); // (-0.1085, INF)
+        ```
+
+    - `Vector2f::divided(Vector2f $vector1, Vector2f $vector2): Vector2f` - Returns new vector that is the quotient of the given vectors.
+        ```php
+        $v = Vector2f::divided(new Vector2f(-1, 1.2), new Vector2f(9.23, 1)); // (-0.1085, 1.2)
+        ```
 
     ### Illegal moves
     Performing illegal moves will throw a runtime exception (\Throwable).
