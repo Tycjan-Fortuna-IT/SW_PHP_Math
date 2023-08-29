@@ -730,6 +730,266 @@ PHP_METHOD(Vector2f, equalVectors)
 	RETURN_BOOL(VECTOR2_EQUALS(vec_first_check_ptr, vec_second_check_ptr));
 }
 
+/**
+ * @brief Calculate the distance between this and the second Vector2f object.
+ * 		  Responsible for calculating the distance between this and the second Vector2f object.
+ * 		  The distance is calculated with the formula: sqrt((x1 - x2)^2 + (y1 - y2)^2).
+ *
+ * @param Vector2f vec_to_distance
+ * @return double
+ */
+PHP_METHOD(Vector2f, distanceBetween)
+{
+	zval* vec_to_distance;
+	vector2f_object *vec_to_distance_ptr;
+
+	if (zend_parse_parameters(ZEND_NUM_ARGS(), "O", &vec_to_distance, vector2f_ce) == FAILURE) {
+		RETURN_NULL();
+	}
+
+	vec_to_distance_ptr = vector2f_objptr_from_zend_objptr(Z_OBJ_P(vec_to_distance));
+
+	vector2f_object *this_obj_ptr = vector2f_objptr_from_zend_objptr(Z_OBJ_P(ZEND_THIS));
+
+	RETURN_DOUBLE(VECTOR2_DISTANCE_BETWEEN(this_obj_ptr, vec_to_distance_ptr));
+}
+
+/**
+ * @brief Calculate the distance between the first and second Vector2f object.
+ * 		  Responsible for calculating the distance between the first and second Vector2f object.
+ * 		  The distance is calculated with the formula: sqrt((x1 - x2)^2 + (y1 - y2)^2).
+ *
+ * @param Vector2f vec_first_distance
+ * @param Vector2f vec_second_distance
+ * @return double
+ */
+PHP_METHOD(Vector2f, distanceBetweenVectors)
+{
+	zval* vec_first_distance, *vec_second_distance;
+	vector2f_object *vec_first_distance_ptr, *vec_second_distance_ptr;
+
+	if (zend_parse_parameters(ZEND_NUM_ARGS(), "OO", &vec_first_distance, vector2f_ce, &vec_second_distance, vector2f_ce) == FAILURE) {
+		RETURN_NULL();
+	}
+
+	vec_first_distance_ptr = vector2f_objptr_from_zend_objptr(Z_OBJ_P(vec_first_distance));
+	vec_second_distance_ptr = vector2f_objptr_from_zend_objptr(Z_OBJ_P(vec_second_distance));
+
+	RETURN_DOUBLE(VECTOR2_DISTANCE_BETWEEN(vec_first_distance_ptr, vec_second_distance_ptr));
+}
+
+/**
+ * @brief Calculate the squared distance between this and the second Vector2f object.
+ * 		  Responsible for calculating the squared distance between this and the second Vector2f object.
+ * 		  The squared distance is calculated with the formula: (x1 - x2)^2 + (y1 - y2)^2.
+ *
+ * @param Vector2f vec_to_distance
+ * @return double
+ */
+PHP_METHOD(Vector2f, distanceBetweenSquared)
+{
+	zval* vec_to_distance;
+	vector2f_object *vec_to_distance_ptr;
+
+	if (zend_parse_parameters(ZEND_NUM_ARGS(), "O", &vec_to_distance, vector2f_ce) == FAILURE) {
+		RETURN_NULL();
+	}
+
+	vec_to_distance_ptr = vector2f_objptr_from_zend_objptr(Z_OBJ_P(vec_to_distance));
+
+	vector2f_object *this_obj_ptr = vector2f_objptr_from_zend_objptr(Z_OBJ_P(ZEND_THIS));
+
+	RETURN_DOUBLE(VECTOR2_DISTANCE_BETWEEN_SQUARED(this_obj_ptr, vec_to_distance_ptr));
+}
+
+/**
+ * @brief Calculate the squared distance between the first and second Vector2f object.
+ * 		  Responsible for calculating the squared distance between the first and second Vector2f object.
+ * 		  The squared distance is calculated with the formula: (x1 - x2)^2 + (y1 - y2)^2.
+ *
+ * @param Vector2f vec_first_distance
+ * @param Vector2f vec_second_distance
+ * @return double
+ */
+PHP_METHOD(Vector2f, distanceBetweenVectorsSquared)
+{
+	zval* vec_first_distance, *vec_second_distance;
+	vector2f_object *vec_first_distance_ptr, *vec_second_distance_ptr;
+
+	if (zend_parse_parameters(ZEND_NUM_ARGS(), "OO", &vec_first_distance, vector2f_ce, &vec_second_distance, vector2f_ce) == FAILURE) {
+		RETURN_NULL();
+	}
+
+	vec_first_distance_ptr = vector2f_objptr_from_zend_objptr(Z_OBJ_P(vec_first_distance));
+	vec_second_distance_ptr = vector2f_objptr_from_zend_objptr(Z_OBJ_P(vec_second_distance));
+
+	RETURN_DOUBLE(VECTOR2_DISTANCE_BETWEEN_SQUARED(vec_first_distance_ptr, vec_second_distance_ptr));
+}
+
+/**
+ * @brief Scale the Vector2f object.
+ * 		  Responsible for scaling the Vector2f object.
+ * 		  The scaling is calculated with the formula: Vector2f(x * scale, y * scale).
+ *
+ * @param double scale
+ * @return void
+ */
+PHP_METHOD(Vector2f, scale)
+{
+	double scale_val;
+
+	if (zend_parse_parameters(ZEND_NUM_ARGS(), "d", &scale_val) == FAILURE) {
+		RETURN_NULL();
+	}
+
+	vector2f_object *obj_ptr = vector2f_objptr_from_zend_objptr(Z_OBJ_P(ZEND_THIS));
+
+	VECTOR2_SCALE(obj_ptr, scale_val);
+}
+
+/**
+ * @brief Return new scaled Vector2f object.
+ * 		  Responsible for scaling the Vector2f object.
+ * 		  The scaling is calculated with the formula: Vector2f(x * scale, y * scale).
+ *
+ * @param Vector2f vec_to_scale
+ * @param double scale
+ * @return Vector2f
+ */
+PHP_METHOD(Vector2f, scaled)
+{
+	zval *vec_to_scale;
+	double scale_val;
+	vector2f_object *vec_to_scale_ptr, *new_obj_ptr;
+
+	if (zend_parse_parameters(ZEND_NUM_ARGS(), "Od", &vec_to_scale, vector2f_ce, &scale_val) == FAILURE) {
+		RETURN_NULL();
+	}
+
+	vec_to_scale_ptr = vector2f_objptr_from_zend_objptr(Z_OBJ_P(vec_to_scale));
+
+	new_obj_ptr = create_vector2f_object(vector2f_ce);
+
+	new_obj_ptr->x = vec_to_scale_ptr->x;
+	new_obj_ptr->y = vec_to_scale_ptr->y;
+
+	VECTOR2_SCALE(new_obj_ptr, scale_val);
+
+	RETURN_OBJ(&new_obj_ptr->std);
+}
+
+/**
+ * @brief Lerps the Vector2f object.
+ * 		  Responsible for lerping the Vector2f object.
+ *
+ * @param Vector2f vector_lerp
+ * @param double t
+ * @return void
+ */
+PHP_METHOD(Vector2f, lerp)
+{
+	zval *vec_to_lerp;
+	double t;
+
+	if (zend_parse_parameters(ZEND_NUM_ARGS(), "Od", &vec_to_lerp, vector2f_ce, &t) == FAILURE) {
+		RETURN_NULL();
+	}
+
+	vector2f_object *vec_to_lerp_ptr = vector2f_objptr_from_zend_objptr(Z_OBJ_P(vec_to_lerp));
+
+	vector2f_object *this_obj_ptr = vector2f_objptr_from_zend_objptr(Z_OBJ_P(ZEND_THIS));
+
+	VECTOR2_LERP(this_obj_ptr, vec_to_lerp_ptr, t);
+}
+
+/**
+ * @brief Return new lerped Vector2f object.
+ * 		  Responsible for lerping the Vector2f object.
+ *
+ * @param Vector2f vector_first_lerp
+ * @param Vector2f vector_second_lerp
+ * @param double t
+ * @return Vector2f
+ */
+PHP_METHOD(Vector2f, lerped)
+{
+	zval *vec_first_lerp, *vec_second_lerp;
+	double t;
+	vector2f_object *vec_first_lerp_ptr, *vec_second_lerp_ptr, *new_obj_ptr;
+
+	if (zend_parse_parameters(ZEND_NUM_ARGS(), "OOd", &vec_first_lerp, vector2f_ce, &vec_second_lerp, vector2f_ce, &t) == FAILURE) {
+		RETURN_NULL();
+	}
+
+	vec_first_lerp_ptr = vector2f_objptr_from_zend_objptr(Z_OBJ_P(vec_first_lerp));
+	vec_second_lerp_ptr = vector2f_objptr_from_zend_objptr(Z_OBJ_P(vec_second_lerp));
+
+	new_obj_ptr = create_vector2f_object(vector2f_ce);
+
+	new_obj_ptr->x = vec_first_lerp_ptr->x;
+	new_obj_ptr->y = vec_first_lerp_ptr->y;
+
+	VECTOR2_LERP(new_obj_ptr, vec_second_lerp_ptr, t);
+
+	RETURN_OBJ(&new_obj_ptr->std);
+}
+
+/**
+ * @brief Slerps the Vector2f object.
+ * 		  Responsible for slerping the Vector2f object.
+ *
+ * @param Vector2f vector_to_slerp
+ * @param double t
+ * @return void
+ */
+PHP_METHOD(Vector2f, slerp)
+{
+	zval *vec_to_slerp;
+	double t;
+
+	if (zend_parse_parameters(ZEND_NUM_ARGS(), "Od", &vec_to_slerp, vector2f_ce, &t) == FAILURE) {
+		RETURN_NULL();
+	}
+
+	vector2f_object *vec_to_slerp_ptr = vector2f_objptr_from_zend_objptr(Z_OBJ_P(vec_to_slerp));
+
+	vector2f_object *this_obj_ptr = vector2f_objptr_from_zend_objptr(Z_OBJ_P(ZEND_THIS));
+
+	VECTOR2_SLERP(this_obj_ptr, vec_to_slerp_ptr, t);
+}
+
+/**
+ * @brief Return new slerped Vector2f object.
+ * 		  Responsible for slerping the Vector2f object.
+ *
+ * @param Vector2f vector_first_slerp
+ * @param Vector2f vector_second_slerp
+ * @param double t
+ * @return Vector2f
+ */
+PHP_METHOD(Vector2f, slerped)
+{
+	zval *vec_first_slerp, *vec_second_slerp;
+	double t;
+	vector2f_object *vec_first_slerp_ptr, *vec_second_slerp_ptr, *new_obj_ptr;
+
+	if (zend_parse_parameters(ZEND_NUM_ARGS(), "OOd", &vec_first_slerp, vector2f_ce, &vec_second_slerp, vector2f_ce, &t) == FAILURE) {
+		RETURN_NULL();
+	}
+
+	vec_first_slerp_ptr = vector2f_objptr_from_zend_objptr(Z_OBJ_P(vec_first_slerp));
+	vec_second_slerp_ptr = vector2f_objptr_from_zend_objptr(Z_OBJ_P(vec_second_slerp));
+
+	new_obj_ptr = create_vector2f_object(vector2f_ce);
+
+	new_obj_ptr->x = vec_first_slerp_ptr->x;
+	new_obj_ptr->y = vec_first_slerp_ptr->y;
+
+	VECTOR2_SLERP(new_obj_ptr, vec_second_slerp_ptr, t);
+
+	RETURN_OBJ(&new_obj_ptr->std);
+}
+
 // ------------------------------------------------------------------
 // Module initialization
 // ------------------------------------------------------------------

@@ -1,5 +1,5 @@
 --TEST--
-Check if normalized(Vector2f) method is working as it should.
+Check if Vector2f::normalized(Vector2f) method is working as it should.
 
 
 --EXTENSIONS--

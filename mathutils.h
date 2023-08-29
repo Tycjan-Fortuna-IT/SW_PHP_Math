@@ -14,7 +14,7 @@
 	(v->x * v->x + v->y * v->y)
 
 #define VECTOR2_LENGTH(v) \
-	sqrt(v->x * v->x + v->y * v->y)
+	sqrt(VECTOR2_SQUARE_LENGTH(v))
 
 #define VECTOR2_NORMALIZE(v)              \
 	{                                     \
@@ -44,6 +44,40 @@
 #define VECTOR2_ANGLE_BETWEEN(v1, v2) \
 	acos(VECTOR2_DOT(v1, v2) / (VECTOR2_LENGTH(v1) * VECTOR2_LENGTH(v2)))
 
+#define VECTOR2_DISTANCE_BETWEEN_SQUARED(v1, v2) \
+	((v1->x - v2->x) * (v1->x - v2->x) + (v1->y - v2->y) * (v1->y - v2->y))
+
+#define VECTOR2_DISTANCE_BETWEEN(v1, v2) \
+    sqrt(VECTOR2_DISTANCE_BETWEEN_SQUARED(v1, v2))
+
+#define VECTOR2_SCALE(v, s) \
+	{                       \
+		v->x *= s;          \
+		v->y *= s;          \
+	}
+
+#define VECTOR2_LERP(v1, v2, t) \
+	{                           \
+		v1->x += (v2->x - v1->x) * t; \
+		v1->y += (v2->y - v1->y) * t; \
+	}
+
+#define VECTOR2_SLERP(v1, v2, t) \
+	{                           \
+		float dot = v1->x * v2->x + v1->y * v2->y; \
+		float angle = acos(dot); \
+		if (angle < 0.000001) { \
+			v1->x = v1->x + t * (v2->x - v1->x); \
+			v1->y = v1->y + t * (v2->y - v1->y); \
+		} else { \
+			float sinAngle = sin(angle); \
+			float sinAngle1 = sin(angle * (1 - t)); \
+			float sinAngle2 = sin(angle * t); \
+			v1->x = (sinAngle1 * v1->x + sinAngle2 * v2->x) / sinAngle; \
+			v1->y = (sinAngle1 * v1->y + sinAngle2 * v2->y) / sinAngle; \
+		} \
+	}
+
 #define PI 3.14159265358979323846
 
 #define RAD_TO_DEG(rad) \
@@ -51,5 +85,8 @@
 
 #define DEG_TO_RAD(deg) \
 	(deg * PI / 180.0)
+
+#define CLAMP(value, min, max) \
+	(value < min ? min : (value > max ? max : value))
 
 #endif // MATH_UTILS_H

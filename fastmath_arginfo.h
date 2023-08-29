@@ -89,6 +89,55 @@ ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_Vector2f_equalVectors, 0, 2, _IS
 	ZEND_ARG_OBJ_INFO(0, vector_second_compare, SW\\Math\\Vector2f, 0)
 ZEND_END_ARG_INFO()
 
+ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_Vector2f_distanceBetween, 0, 1, IS_DOUBLE, 0)
+	ZEND_ARG_OBJ_INFO(0, vector_to_distance, SW\\Math\\Vector2f, 0)
+ZEND_END_ARG_INFO()
+
+ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_Vector2f_distanceBetweenVectors, 0, 2, IS_DOUBLE, 0)
+	ZEND_ARG_OBJ_INFO(0, vector_first_distance, SW\\Math\\Vector2f, 0)
+	ZEND_ARG_OBJ_INFO(0, vector_second_distance, SW\\Math\\Vector2f, 0)
+ZEND_END_ARG_INFO()
+
+ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_Vector2f_distanceBetweenSquared, 0, 1, IS_DOUBLE, 0)
+	ZEND_ARG_OBJ_INFO(0, vector_to_distance, SW\\Math\\Vector2f, 0)
+ZEND_END_ARG_INFO()
+
+ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_Vector2f_distanceBetweenVectorsSquared, 0, 2, IS_DOUBLE, 0)
+	ZEND_ARG_OBJ_INFO(0, vector_first_distance, SW\\Math\\Vector2f, 0)
+	ZEND_ARG_OBJ_INFO(0, vector_second_distance, SW\\Math\\Vector2f, 0)
+ZEND_END_ARG_INFO()
+
+ZEND_BEGIN_ARG_INFO_EX(arginfo_Vector2f_scale, 0, 0, 1)
+	ZEND_ARG_TYPE_INFO(0, scale, IS_DOUBLE, 0)
+ZEND_END_ARG_INFO()
+
+ZEND_BEGIN_ARG_WITH_RETURN_OBJ_INFO_EX(arginfo_Vector2f_scaled, 0, 2, SW\\Math\\Vector2f, 0)
+	ZEND_ARG_OBJ_INFO(0, vector_to_scale, SW\\Math\\Vector2f, 0)
+	ZEND_ARG_TYPE_INFO(0, scale, IS_DOUBLE, 0)
+ZEND_END_ARG_INFO()
+
+ZEND_BEGIN_ARG_INFO_EX(arginfo_Vector2f_lerp, 0, 0, 2)
+	ZEND_ARG_OBJ_INFO(0, vector_lerp, SW\\Math\\Vector2f, 0)
+	ZEND_ARG_TYPE_INFO(0, t, IS_DOUBLE, 0)
+ZEND_END_ARG_INFO()
+
+ZEND_BEGIN_ARG_WITH_RETURN_OBJ_INFO_EX(arginfo_Vector2f_lerped, 0, 3, SW\\Math\\Vector2f, 0)
+	ZEND_ARG_OBJ_INFO(0, vector_first_lerp, SW\\Math\\Vector2f, 0)
+	ZEND_ARG_OBJ_INFO(0, vector_second_lerp, SW\\Math\\Vector2f, 0)
+	ZEND_ARG_TYPE_INFO(0, t, IS_DOUBLE, 0)
+ZEND_END_ARG_INFO()
+
+ZEND_BEGIN_ARG_INFO_EX(arginfo_Vector2f_slerp, 0, 0, 2)
+	ZEND_ARG_OBJ_INFO(0, vector_slerp, SW\\Math\\Vector2f, 0)
+	ZEND_ARG_TYPE_INFO(0, t, IS_DOUBLE, 0)
+ZEND_END_ARG_INFO()
+
+ZEND_BEGIN_ARG_WITH_RETURN_OBJ_INFO_EX(arginfo_Vector2f_slerped, 0, 3, SW\\Math\\Vector2f, 0)
+	ZEND_ARG_OBJ_INFO(0, vector_first_slerp, SW\\Math\\Vector2f, 0)
+	ZEND_ARG_OBJ_INFO(0, vector_second_slerp, SW\\Math\\Vector2f, 0)
+	ZEND_ARG_TYPE_INFO(0, t, IS_DOUBLE, 0)
+ZEND_END_ARG_INFO()
+
 ZEND_METHOD(Vector2f, __construct);
 ZEND_METHOD(Vector2f, toString);
 ZEND_METHOD(Vector2f, length);
@@ -109,6 +158,16 @@ ZEND_METHOD(Vector2f, angleBetweenDeg);
 ZEND_METHOD(Vector2f, angleBetweenVectorsDeg);
 ZEND_METHOD(Vector2f, equals);
 ZEND_METHOD(Vector2f, equalVectors);
+ZEND_METHOD(Vector2f, distanceBetween);
+ZEND_METHOD(Vector2f, distanceBetweenVectors);
+ZEND_METHOD(Vector2f, distanceBetweenSquared);
+ZEND_METHOD(Vector2f, distanceBetweenVectorsSquared);
+ZEND_METHOD(Vector2f, scale);
+ZEND_METHOD(Vector2f, scaled);
+ZEND_METHOD(Vector2f, lerp);
+ZEND_METHOD(Vector2f, lerped);
+ZEND_METHOD(Vector2f, slerp);
+ZEND_METHOD(Vector2f, slerped);
 
 static zend_function_entry vector2f_methods[] = {
     PHP_ME(Vector2f, __construct, arginfo_Vector2f__construct, ZEND_ACC_PUBLIC | ZEND_ACC_CTOR)
@@ -131,6 +190,16 @@ static zend_function_entry vector2f_methods[] = {
 	PHP_ME(Vector2f, angleBetweenVectorsDeg, arginfo_Vector2f_angleBetweenVectorsDeg, ZEND_ACC_PUBLIC | ZEND_ACC_STATIC)
 	PHP_ME(Vector2f, equals, arginfo_Vector2f_equals, ZEND_ACC_PUBLIC)
 	PHP_ME(Vector2f, equalVectors, arginfo_Vector2f_equalVectors, ZEND_ACC_PUBLIC | ZEND_ACC_STATIC)
+	PHP_ME(Vector2f, distanceBetween, arginfo_Vector2f_distanceBetween, ZEND_ACC_PUBLIC)
+	PHP_ME(Vector2f, distanceBetweenVectors, arginfo_Vector2f_distanceBetweenVectors, ZEND_ACC_PUBLIC | ZEND_ACC_STATIC)
+	PHP_ME(Vector2f, distanceBetweenSquared, arginfo_Vector2f_distanceBetweenSquared, ZEND_ACC_PUBLIC)
+	PHP_ME(Vector2f, distanceBetweenVectorsSquared, arginfo_Vector2f_distanceBetweenVectorsSquared, ZEND_ACC_PUBLIC | ZEND_ACC_STATIC)
+	PHP_ME(Vector2f, scale, arginfo_Vector2f_scale, ZEND_ACC_PUBLIC)
+	PHP_ME(Vector2f, scaled, arginfo_Vector2f_scaled, ZEND_ACC_PUBLIC | ZEND_ACC_STATIC)
+	PHP_ME(Vector2f, lerp, arginfo_Vector2f_lerp, ZEND_ACC_PUBLIC)
+	PHP_ME(Vector2f, lerped, arginfo_Vector2f_lerped, ZEND_ACC_PUBLIC | ZEND_ACC_STATIC)
+	PHP_ME(Vector2f, slerp, arginfo_Vector2f_slerp, ZEND_ACC_PUBLIC)
+	PHP_ME(Vector2f, slerped, arginfo_Vector2f_slerped, ZEND_ACC_PUBLIC | ZEND_ACC_STATIC)
     PHP_FE_END
 };
 

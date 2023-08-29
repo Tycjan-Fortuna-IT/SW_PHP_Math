@@ -179,5 +179,118 @@ namespace SW\Math {
          * @return bool
          */
         public static function equalVectors(Vector2f $vector1, Vector2f $vector2): bool {}
+
+        /**
+         * Returns the distance between this vector and another vector.
+         *
+         * @param Vector2f $vector Vector to get the distance.
+         *
+         * @return float
+         */
+        public function distanceBetween(Vector2f $vector): float {}
+
+        /**
+         * Returns the distance between two vectors.
+         *
+         * @param Vector2f $vector1 First vector.
+         * @param Vector2f $vector2 Second vector.
+         *
+         * @return float
+         */
+        public static function distanceBetweenVectors(Vector2f $vector1, Vector2f $vector2): float {}
+
+        /**
+         * Returns the squared distance between this vector and another vector.
+         *
+         * @param Vector2f $vector Vector to get the distance.
+         *
+         * @return float
+         */
+        public function distanceBetweenSquared(Vector2f $vector): float {}
+
+        /**
+         * Returns the squared distance between two vectors.
+         *
+         * @param Vector2f $vector1 First vector.
+         * @param Vector2f $vector2 Second vector.
+         *
+         * @return float
+         */
+        public static function distanceBetweenVectorsSquared(Vector2f $vector1, Vector2f $vector2): float {}
+
+        /**
+         * Scale the vector.
+         *
+         * @param float $scale Scale factor.
+         *
+         * @return void
+         */
+        public function scale(float $scale): void {}
+
+        /**
+         * Returns the scaled vector.
+         *
+         * @param Vector2f $vector Vector to scale.
+         * @param float $scale Scale factor.
+         *
+         * @return Vector2f
+         */
+        public static function scaled(Vector2f $vector, float $scale): Vector2f {}
+
+        /**
+         * Linear interpolation between this and passed vector.
+         * The interpolation parameter $t is clamped to the range [0, 1].
+         * If $t = 0, the method returns $vector1.
+         * If $t = 1, the method returns $vector2.
+         * If $t = 0.5, the method returns the midpoint of the line segment between $vector1 and $vector2.
+         *
+         * @param Vector2f $vector1 First vector.
+         * @param Vector2f $vector2 Second vector.
+         * @param float $t Interpolation parameter.
+         */
+        public function lerp(Vector2f $vector, float $t): void {}
+
+        /**
+         * Returns the linear interpolation between two vectors.
+         * The interpolation parameter $t is clamped to the range [0, 1].
+         * If $t = 0, the method returns $vector1.
+         * If $t = 1, the method returns $vector2.
+         * If $t = 0.5, the method returns the midpoint of the line segment between $vector1 and $vector2.
+         *
+         * @param Vector2f $vector1 First vector.
+         * @param Vector2f $vector2 Second vector.
+         * @param float $t Interpolation parameter.
+         *
+         * @return Vector2f
+         */
+        public static function lerped(Vector2f $vector1, Vector2f $vector2, float $t): Vector2f {}
+
+        /**
+         * Spherical linear interpolation between this and passed vector.
+         * The interpolation parameter $t is clamped to the range [0, 1].
+         * If $t = 0, the method returns $vector1.
+         * If $t = 1, the method returns $vector2.
+         * If $t = 0.5, the method returns the midpoint of the line segment between $vector1 and $vector2.
+         *
+         * @param Vector2f $vector1 First vector.
+         * @param Vector2f $vector2 Second vector.
+         * @param float $t Interpolation parameter.
+         */
+        public function slerp(Vector2f $vector, float $t): void {}
+
+        /**
+         * Returns the spherical linear interpolation between two vectors.
+         * The interpolation parameter $t is clamped to the range [0, 1].
+         * If $t = 0, the method returns $vector1.
+         * If $t = 1, the method returns $vector2.
+         * If $t = 0.5, the method returns the midpoint of the line segment between $vector1 and $vector2.
+         *
+         * @param Vector2f $vector1 First vector.
+         * @param Vector2f $vector2 Second vector.
+         * @param float $t Interpolation parameter.
+         *
+         * @return Vector2f
+         */
+        public static function slerped(Vector2f $vector1, Vector2f $vector2, float $t): Vector2f {}
     }
 }
