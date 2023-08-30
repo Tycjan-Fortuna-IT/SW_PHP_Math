@@ -990,6 +990,234 @@ PHP_METHOD(Vector2f, slerped)
 	RETURN_OBJ(&new_obj_ptr->std);
 }
 
+/**
+ * @brief Add second Vector2f object to this Vector2f object.
+ * 		  Responsible for adding second Vector2f object to this Vector2f object.
+ * 		  The addition is calculated with the formula: Vector2f(x + vec.x, y + vec.y).
+ *
+ * @param Vector2f vec_to_add
+ *
+ * @return void
+ */
+PHP_METHOD(Vector2f, add)
+{
+	zval *vec_to_add;
+	vector2f_object *vec_to_add_ptr;
+
+	if (zend_parse_parameters(ZEND_NUM_ARGS(), "O", &vec_to_add, vector2f_ce) == FAILURE) {
+		RETURN_NULL();
+	}
+
+	vec_to_add_ptr = vector2f_objptr_from_zend_objptr(Z_OBJ_P(vec_to_add));
+
+	vector2f_object *this_obj_ptr = vector2f_objptr_from_zend_objptr(Z_OBJ_P(ZEND_THIS));
+
+	VECTOR2_ADD(this_obj_ptr, vec_to_add_ptr);
+}
+
+/**
+ * @brief Return new added Vector2f object.
+ * 		  Responsible for adding second Vector2f object to this Vector2f object.
+ * 		  The addition is calculated with the formula: Vector2f(x + vec.x, y + vec.y).
+ *
+ * @param Vector2f vec_first_add
+ * @param Vector2f vec_second_add
+ *
+ * @return Vector2f
+ */
+PHP_METHOD(Vector2f, added)
+{
+	zval *vec_first_add, *vec_second_add;
+	vector2f_object *vec_first_add_ptr, *vec_second_add_ptr, *new_obj_ptr;
+
+	if (zend_parse_parameters(ZEND_NUM_ARGS(), "OO", &vec_first_add, vector2f_ce, &vec_second_add, vector2f_ce) == FAILURE) {
+		RETURN_NULL();
+	}
+
+	vec_first_add_ptr = vector2f_objptr_from_zend_objptr(Z_OBJ_P(vec_first_add));
+	vec_second_add_ptr = vector2f_objptr_from_zend_objptr(Z_OBJ_P(vec_second_add));
+
+	new_obj_ptr = create_vector2f_object(vector2f_ce);
+
+	new_obj_ptr->x = vec_first_add_ptr->x;
+	new_obj_ptr->y = vec_first_add_ptr->y;
+
+	VECTOR2_ADD(new_obj_ptr, vec_second_add_ptr);
+
+	RETURN_OBJ(&new_obj_ptr->std);
+}
+
+/**
+ * @brief Subtract second Vector2f object from this Vector2f object.
+ * 		  Responsible for subtracting second Vector2f object from this Vector2f object.
+ * 		  The subtraction is calculated with the formula: Vector2f(x - vec.x, y - vec.y).
+ *
+ * @param Vector2f vec_to_sub
+ *
+ * @return void
+ */
+PHP_METHOD(Vector2f, sub)
+{
+	zval *vec_to_sub;
+	vector2f_object *vec_to_sub_ptr;
+
+	if (zend_parse_parameters(ZEND_NUM_ARGS(), "O", &vec_to_sub, vector2f_ce) == FAILURE) {
+		RETURN_NULL();
+	}
+
+	vec_to_sub_ptr = vector2f_objptr_from_zend_objptr(Z_OBJ_P(vec_to_sub));
+
+	vector2f_object *this_obj_ptr = vector2f_objptr_from_zend_objptr(Z_OBJ_P(ZEND_THIS));
+
+	VECTOR2_SUBTRACT(this_obj_ptr, vec_to_sub_ptr);
+}
+
+/**
+ * @brief Return new subtracted Vector2f object.
+ * 		  Responsible for subtracting second Vector2f object from this Vector2f object.
+ * 		  The subtraction is calculated with the formula: Vector2f(x - vec.x, y - vec.y).
+ *
+ * @param Vector2f vec_first_sub
+ * @param Vector2f vec_second_sub
+ *
+ * @return Vector2f
+ */
+PHP_METHOD(Vector2f, subtracted)
+{
+	zval *vec_first_sub, *vec_second_sub;
+	vector2f_object *vec_first_sub_ptr, *vec_second_sub_ptr, *new_obj_ptr;
+
+	if (zend_parse_parameters(ZEND_NUM_ARGS(), "OO", &vec_first_sub, vector2f_ce, &vec_second_sub, vector2f_ce) == FAILURE) {
+		RETURN_NULL();
+	}
+
+	vec_first_sub_ptr = vector2f_objptr_from_zend_objptr(Z_OBJ_P(vec_first_sub));
+	vec_second_sub_ptr = vector2f_objptr_from_zend_objptr(Z_OBJ_P(vec_second_sub));
+
+	new_obj_ptr = create_vector2f_object(vector2f_ce);
+
+	new_obj_ptr->x = vec_first_sub_ptr->x;
+	new_obj_ptr->y = vec_first_sub_ptr->y;
+
+	VECTOR2_SUBTRACT(new_obj_ptr, vec_second_sub_ptr);
+
+	RETURN_OBJ(&new_obj_ptr->std);
+}
+
+/**
+ * @brief Multiply this Vector2f object by second Vector2f object.
+ * 		  Responsible for multiplying this Vector2f object by second Vector2f object.
+ * 		  The multiplication is calculated with the formula: Vector2f(x * vec.x, y * vec.y).
+ *
+ * @param Vector2f vec_to_mul
+ *
+ * @return void
+ */
+PHP_METHOD(Vector2f, mul)
+{
+	zval *vec_to_mul;
+	vector2f_object *vec_to_mul_ptr;
+
+	if (zend_parse_parameters(ZEND_NUM_ARGS(), "O", &vec_to_mul, vector2f_ce) == FAILURE) {
+		RETURN_NULL();
+	}
+
+	vec_to_mul_ptr = vector2f_objptr_from_zend_objptr(Z_OBJ_P(vec_to_mul));
+
+	vector2f_object *this_obj_ptr = vector2f_objptr_from_zend_objptr(Z_OBJ_P(ZEND_THIS));
+
+	VECTOR2_MULTIPLY(this_obj_ptr, vec_to_mul_ptr);
+}
+
+/**
+ * @brief Return new multiplied Vector2f object.
+ * 		  Responsible for multiplying this Vector2f object by second Vector2f object.
+ * 		  The multiplication is calculated with the formula: Vector2f(x * vec.x, y * vec.y).
+ *
+ * @param Vector2f vec_first_mul
+ * @param Vector2f vec_second_mul
+ *
+ * @return Vector2f
+ */
+PHP_METHOD(Vector2f, multiplied)
+{
+	zval *vec_first_mul, *vec_second_mul;
+	vector2f_object *vec_first_mul_ptr, *vec_second_mul_ptr, *new_obj_ptr;
+
+	if (zend_parse_parameters(ZEND_NUM_ARGS(), "OO", &vec_first_mul, vector2f_ce, &vec_second_mul, vector2f_ce) == FAILURE) {
+		RETURN_NULL();
+	}
+
+	vec_first_mul_ptr = vector2f_objptr_from_zend_objptr(Z_OBJ_P(vec_first_mul));
+	vec_second_mul_ptr = vector2f_objptr_from_zend_objptr(Z_OBJ_P(vec_second_mul));
+
+	new_obj_ptr = create_vector2f_object(vector2f_ce);
+
+	new_obj_ptr->x = vec_first_mul_ptr->x;
+	new_obj_ptr->y = vec_first_mul_ptr->y;
+
+	VECTOR2_MULTIPLY(new_obj_ptr, vec_second_mul_ptr);
+
+	RETURN_OBJ(&new_obj_ptr->std);
+}
+
+/**
+ * @brief Divide this Vector2f object by second Vector2f object.
+ * 		  Responsible for dividing this Vector2f object by second Vector2f object.
+ * 		  The division is calculated with the formula: Vector2f(x / vec.x, y / vec.y).
+ *
+ * @param Vector2f vec_to_div
+ *
+ * @return void
+ */
+PHP_METHOD(Vector2f, div)
+{
+	zval *vec_to_div;
+	vector2f_object *vec_to_div_ptr;
+
+	if (zend_parse_parameters(ZEND_NUM_ARGS(), "O", &vec_to_div, vector2f_ce) == FAILURE) {
+		RETURN_NULL();
+	}
+
+	vec_to_div_ptr = vector2f_objptr_from_zend_objptr(Z_OBJ_P(vec_to_div));
+
+	vector2f_object *this_obj_ptr = vector2f_objptr_from_zend_objptr(Z_OBJ_P(ZEND_THIS));
+
+	VECTOR2_DIVIDE(this_obj_ptr, vec_to_div_ptr);
+}
+
+/**
+ * @brief Return new divided Vector2f object.
+ * 		  Responsible for dividing this Vector2f object by second Vector2f object.
+ * 		  The division is calculated with the formula: Vector2f(x / vec.x, y / vec.y).
+ *
+ * @param Vector2f vec_first_div
+ * @param Vector2f vec_second_div
+ *
+ * @return Vector2f
+ */
+PHP_METHOD(Vector2f, divided)
+{
+	zval *vec_first_div, *vec_second_div;
+	vector2f_object *vec_first_div_ptr, *vec_second_div_ptr, *new_obj_ptr;
+
+	if (zend_parse_parameters(ZEND_NUM_ARGS(), "OO", &vec_first_div, vector2f_ce, &vec_second_div, vector2f_ce) == FAILURE) {
+		RETURN_NULL();
+	}
+
+	vec_first_div_ptr = vector2f_objptr_from_zend_objptr(Z_OBJ_P(vec_first_div));
+	vec_second_div_ptr = vector2f_objptr_from_zend_objptr(Z_OBJ_P(vec_second_div));
+
+	new_obj_ptr = create_vector2f_object(vector2f_ce);
+
+	new_obj_ptr->x = vec_first_div_ptr->x;
+	new_obj_ptr->y = vec_first_div_ptr->y;
+
+	VECTOR2_DIVIDE(new_obj_ptr, vec_second_div_ptr);
+
+	RETURN_OBJ(&new_obj_ptr->std);
+}
+
 // ------------------------------------------------------------------
 // Module initialization
 // ------------------------------------------------------------------

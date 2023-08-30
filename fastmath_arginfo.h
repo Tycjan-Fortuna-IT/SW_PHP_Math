@@ -138,6 +138,42 @@ ZEND_BEGIN_ARG_WITH_RETURN_OBJ_INFO_EX(arginfo_Vector2f_slerped, 0, 3, SW\\Math\
 	ZEND_ARG_TYPE_INFO(0, t, IS_DOUBLE, 0)
 ZEND_END_ARG_INFO()
 
+ZEND_BEGIN_ARG_INFO_EX(arginfo_Vector2f_add, 0, 0, 1)
+	ZEND_ARG_OBJ_INFO(0, vector_to_add, SW\\Math\\Vector2f, 0)
+ZEND_END_ARG_INFO()
+
+ZEND_BEGIN_ARG_WITH_RETURN_OBJ_INFO_EX(arginfo_Vector2f_added, 0, 2, SW\\Math\\Vector2f, 0)
+	ZEND_ARG_OBJ_INFO(0, vector_first_add, SW\\Math\\Vector2f, 0)
+	ZEND_ARG_OBJ_INFO(0, vector_second_add, SW\\Math\\Vector2f, 0)
+ZEND_END_ARG_INFO()
+
+ZEND_BEGIN_ARG_INFO_EX(arginfo_Vector2f_sub, 0, 0, 1)
+	ZEND_ARG_OBJ_INFO(0, vector_to_sub, SW\\Math\\Vector2f, 0)
+ZEND_END_ARG_INFO()
+
+ZEND_BEGIN_ARG_WITH_RETURN_OBJ_INFO_EX(arginfo_Vector2f_subtracted, 0, 2, SW\\Math\\Vector2f, 0)
+	ZEND_ARG_OBJ_INFO(0, vector_first_sub, SW\\Math\\Vector2f, 0)
+	ZEND_ARG_OBJ_INFO(0, vector_second_sub, SW\\Math\\Vector2f, 0)
+ZEND_END_ARG_INFO()
+
+ZEND_BEGIN_ARG_INFO_EX(arginfo_Vector2f_mul, 0, 0, 1)
+	ZEND_ARG_OBJ_INFO(0, vector_to_mul, SW\\Math\\Vector2f, 0)
+ZEND_END_ARG_INFO()
+
+ZEND_BEGIN_ARG_WITH_RETURN_OBJ_INFO_EX(arginfo_Vector2f_multiplied, 0, 2, SW\\Math\\Vector2f, 0)
+	ZEND_ARG_OBJ_INFO(0, vector_first_mul, SW\\Math\\Vector2f, 0)
+	ZEND_ARG_OBJ_INFO(0, vector_second_mul, SW\\Math\\Vector2f, 0)
+ZEND_END_ARG_INFO()
+
+ZEND_BEGIN_ARG_INFO_EX(arginfo_Vector2f_div, 0, 0, 1)
+	ZEND_ARG_OBJ_INFO(0, vector_to_div, SW\\Math\\Vector2f, 0)
+ZEND_END_ARG_INFO()
+
+ZEND_BEGIN_ARG_WITH_RETURN_OBJ_INFO_EX(arginfo_Vector2f_divided, 0, 2, SW\\Math\\Vector2f, 0)
+	ZEND_ARG_OBJ_INFO(0, vector_first_div, SW\\Math\\Vector2f, 0)
+	ZEND_ARG_OBJ_INFO(0, vector_second_div, SW\\Math\\Vector2f, 0)
+ZEND_END_ARG_INFO()
+
 ZEND_METHOD(Vector2f, __construct);
 ZEND_METHOD(Vector2f, toString);
 ZEND_METHOD(Vector2f, length);
@@ -168,6 +204,14 @@ ZEND_METHOD(Vector2f, lerp);
 ZEND_METHOD(Vector2f, lerped);
 ZEND_METHOD(Vector2f, slerp);
 ZEND_METHOD(Vector2f, slerped);
+ZEND_METHOD(Vector2f, add);
+ZEND_METHOD(Vector2f, added);
+ZEND_METHOD(Vector2f, sub);
+ZEND_METHOD(Vector2f, subtracted);
+ZEND_METHOD(Vector2f, mul);
+ZEND_METHOD(Vector2f, multiplied);
+ZEND_METHOD(Vector2f, div);
+ZEND_METHOD(Vector2f, divided);
 
 static zend_function_entry vector2f_methods[] = {
     PHP_ME(Vector2f, __construct, arginfo_Vector2f__construct, ZEND_ACC_PUBLIC | ZEND_ACC_CTOR)
@@ -200,6 +244,14 @@ static zend_function_entry vector2f_methods[] = {
 	PHP_ME(Vector2f, lerped, arginfo_Vector2f_lerped, ZEND_ACC_PUBLIC | ZEND_ACC_STATIC)
 	PHP_ME(Vector2f, slerp, arginfo_Vector2f_slerp, ZEND_ACC_PUBLIC)
 	PHP_ME(Vector2f, slerped, arginfo_Vector2f_slerped, ZEND_ACC_PUBLIC | ZEND_ACC_STATIC)
+	PHP_ME(Vector2f, add, arginfo_Vector2f_add, ZEND_ACC_PUBLIC)
+	PHP_ME(Vector2f, added, arginfo_Vector2f_added, ZEND_ACC_PUBLIC | ZEND_ACC_STATIC)
+	PHP_ME(Vector2f, sub, arginfo_Vector2f_sub, ZEND_ACC_PUBLIC)
+	PHP_ME(Vector2f, subtracted, arginfo_Vector2f_subtracted, ZEND_ACC_PUBLIC | ZEND_ACC_STATIC)
+	PHP_ME(Vector2f, mul, arginfo_Vector2f_mul, ZEND_ACC_PUBLIC)
+	PHP_ME(Vector2f, multiplied, arginfo_Vector2f_multiplied, ZEND_ACC_PUBLIC | ZEND_ACC_STATIC)
+	PHP_ME(Vector2f, div, arginfo_Vector2f_div, ZEND_ACC_PUBLIC)
+	PHP_ME(Vector2f, divided, arginfo_Vector2f_divided, ZEND_ACC_PUBLIC | ZEND_ACC_STATIC)
     PHP_FE_END
 };
 

@@ -292,5 +292,81 @@ namespace SW\Math {
          * @return Vector2f
          */
         public static function slerped(Vector2f $vector1, Vector2f $vector2, float $t): Vector2f {}
+
+        /**
+         * Adds the passed vector to this vector.
+         *
+         * @param Vector2f $vector Vector to add.
+         *
+         * @return void
+         */
+        public function add(Vector2f $vector): void {}
+
+        /**
+         * Returns the vector that is a sum of adding two vectors.
+         *
+         * @param Vector2f $vector1 First vector.
+         * @param Vector2f $vector2 Second vector.
+         *
+         * @return Vector2f
+         */
+        public static function added(Vector2f $vector1, Vector2f $vector2): Vector2f {}
+
+        /**
+         * Subtracts the passed vector from this vector.
+         *
+         * @param Vector2f $vector Vector to subtract.
+         *
+         * @return void
+         */
+        public function sub(Vector2f $vector): void {}
+
+        /**
+         * Returns the vector that is a difference of subtracting two vectors.
+         *
+         * @param Vector2f $vector1 First vector.
+         * @param Vector2f $vector2 Second vector.
+         *
+         * @return Vector2f
+         */
+        public static function subtracted(Vector2f $vector1, Vector2f $vector2): Vector2f {}
+
+        /**
+         * Multiplies the passed vector to this vector.
+         *
+         * @param Vector2f $vector Vector to multiply.
+         *
+         * @return void
+         */
+        public function mul(Vector2f $vector): void {}
+
+        /**
+         * Returns the vector that is a product of multiplying two vectors.
+         *
+         * @param Vector2f $vector1 First vector.
+         * @param Vector2f $vector2 Second vector.
+         *
+         * @return Vector2f
+         */
+        public static function multiplied(Vector2f $vector1, Vector2f $vector2): Vector2f {}
+
+        /**
+         * Divides the passed vector from this vector.
+         *
+         * @param Vector2f $vector Vector to divide.
+         *
+         * @return void
+         */
+        public function div(Vector2f $vector): void {}
+
+        /**
+         * Returns the vector that is a quotient of dividing two vectors.
+         *
+         * @param Vector2f $vector1 First vector.
+         * @param Vector2f $vector2 Second vector.
+         *
+         * @return Vector2f
+         */
+        public static function divided(Vector2f $vector1, Vector2f $vector2): Vector2f {}
     }
 }

@@ -56,6 +56,30 @@
 		v->y *= s;          \
 	}
 
+#define VECTOR2_ADD(v1, v2) \
+	{                       \
+		v1->x += v2->x;     \
+		v1->y += v2->y;     \
+	}
+
+#define VECTOR2_SUBTRACT(v1, v2) \
+	{                            \
+		v1->x -= v2->x;          \
+		v1->y -= v2->y;          \
+	}
+
+#define VECTOR2_MULTIPLY(v1, v2) \
+	{                            \
+		v1->x *= v2->x;          \
+		v1->y *= v2->y;          \
+	}
+
+#define VECTOR2_DIVIDE(v1, v2) \
+	{                          \
+		v1->x /= v2->x;        \
+		v1->y /= v2->y;        \
+	}
+
 #define VECTOR2_LERP(v1, v2, t) \
 	{                           \
 		v1->x += (v2->x - v1->x) * t; \
