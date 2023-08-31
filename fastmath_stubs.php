@@ -369,4 +369,16 @@ namespace SW\Math {
          */
         public static function divided(Vector2f $vector1, Vector2f $vector2): Vector2f {}
     }
+
+    class Vector3f
+    {
+        /**
+         * Creates a new instance of Vector3f.
+         *
+         * @param ?float $x X coordinate of the vector.
+         * @param ?float $y Y coordinate of the vector.
+         * @param ?float $z Z coordinate of the vector.
+         */
+        public function __construct(public ?float $x = 0.0, public ?float $y = 0.0, public ?float $z = 0.0) {}
+    }
 }

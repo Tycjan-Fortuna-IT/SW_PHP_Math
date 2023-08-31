@@ -255,6 +255,26 @@ static zend_function_entry vector2f_methods[] = {
     PHP_FE_END
 };
 
+
+// ------------------------------------------------------------------
+/////////////////////////////////////////////////////////////////////
+// 							Vector3f class
+/////////////////////////////////////////////////////////////////////
+// ------------------------------------------------------------------
+
+ZEND_BEGIN_ARG_INFO_EX(arginfo_Vector3f__construct, 0, 0, 1)
+	ZEND_ARG_INFO(0, x)
+	ZEND_ARG_INFO(0, y)
+	ZEND_ARG_INFO(0, z)
+ZEND_END_ARG_INFO()
+
+PHP_METHOD(Vector3f, __construct);
+
+static zend_function_entry vector3f_methods[] = {
+	PHP_ME(Vector3f, __construct, arginfo_Vector3f__construct, ZEND_ACC_PUBLIC | ZEND_ACC_CTOR)
+	PHP_FE_END
+};
+
 static const zend_function_entry ext_functions[] = {
 	ZEND_FE_END
 };

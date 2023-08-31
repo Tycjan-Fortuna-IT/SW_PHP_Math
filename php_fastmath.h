@@ -8,7 +8,6 @@ extern zend_module_entry fastmath_module_entry;
 
 # define PHP_FASTMATH_VERSION "0.1.0"
 
-
 // ------------------------------------------------------------------
 /////////////////////////////////////////////////////////////////////
 // 							Vector2f class
@@ -27,6 +26,25 @@ zend_always_inline vector2f_object *vector2f_objptr_from_zend_objptr(zend_object
 
 zend_class_entry *get_vector2f_ce();
 
+
+// ------------------------------------------------------------------
+/////////////////////////////////////////////////////////////////////
+// 							Vector3f class
+/////////////////////////////////////////////////////////////////////
+// ------------------------------------------------------------------
+
+typedef struct _vector3f_object {
+	double x;
+	double y;
+	double z;
+	zend_object std;
+} vector3f_object;
+
+zend_always_inline vector3f_object *vector3f_objptr_from_zend_objptr(zend_object *obj) {
+	return (vector3f_object *)((char *)obj - XtOffsetOf(vector3f_object, std));
+}
+
+zend_class_entry *get_vector3f_ce();
 
 
 # if defined(ZTS) && defined(COMPILE_DL_FASTMATH)

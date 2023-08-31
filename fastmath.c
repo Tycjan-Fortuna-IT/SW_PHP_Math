@@ -143,11 +143,9 @@ static zval *vector2f_write_prop_handler(zend_object *object, zend_string *membe
 
         if (zend_string_equals_literal(member, "x")) {
 		    obj_ptr->x = Z_DVAL_P(value);
-        }
-        else if (zend_string_equals_literal(member, "y")) {
+        } else if (zend_string_equals_literal(member, "y")) {
 		    obj_ptr->y = Z_DVAL_P(value);
-        }
-        else {
+        } else {
 		    zend_throw_error(NULL, "Trying to write into a invalid property!");
         }
     }
@@ -253,7 +251,7 @@ void vector2f_array_set_handler(zend_object *object, zval *offset, zval *value)
 }
 
 /**
- * @brief Construct a new php method object. Is called when a new Vector2f object is created.
+ * @brief Construct a new Vector2f object. Is called when a new Vector2f object is created.
  * 		  Responsible for initializing the Vector2f object.
  * 		  The constructor takes 0, 1 or 2 arguments. If 0 arguments are passed, the Vector2f object is initialized with 0.0f.
  * 		  If 1 argument is passed, the Vector2f object is initialized with the passed value for x and y.
@@ -1219,25 +1217,325 @@ PHP_METHOD(Vector2f, divided)
 }
 
 // ------------------------------------------------------------------
+/////////////////////////////////////////////////////////////////////
+// 							Vector3f class
+/////////////////////////////////////////////////////////////////////
+// ------------------------------------------------------------------
+
+static zend_class_entry *vector3f_ce;
+
+zend_class_entry *get_vector3f_ce() {
+	return vector3f_ce;
+}
+
+static zend_object_handlers vector3f_handlers;
+
+/**
+ * @brief Creates a new Vector2f object. Allocates memory for the object and initializes it
+ * 		  with default values. The default values are 0.0f for x, y and z.
+ *
+ * @param zend_class_entry* ce
+ * @return vector3f_object*
+ */
+static vector3f_object *create_vector3f_object(zend_class_entry *ce)
+{
+    vector3f_object *obj_ptr;
+
+    obj_ptr = ecalloc(1, sizeof(vector3f_object) + zend_object_properties_size(ce));
+
+    zend_object_std_init(&obj_ptr->std, ce);
+    obj_ptr->std.handlers = &vector3f_handlers;
+
+    obj_ptr->x = 0.0;
+    obj_ptr->y = 0.0;
+    obj_ptr->z = 0.0;
+
+    return obj_ptr;
+}
+
+/**
+ * @brief Creates handler for Vector3f class. Is called when a new Vector3f object is created.
+ *        Responsible for allocating memory for the object and initializing the object.
+ *
+ * @param zend_class_entry* class_type
+ * @return zend_object*
+ */
+zend_object *vector3f_create_handler(zend_class_entry *class_type)
+{
+	size_t block_len = sizeof(vector3f_object) + zend_object_properties_size(class_type);
+	vector3f_object *intern = emalloc(block_len);
+
+	memset(intern, 0, block_len);
+
+	intern->x = 0.0f;
+	intern->y = 0.0f;
+	intern->z = 0.0f;
+
+	zend_object_std_init(&intern->std, class_type);
+	object_properties_init(&intern->std, class_type);
+
+	intern->std.handlers = &vector3f_handlers;
+
+	return &intern->std;
+}
+
+/**
+ * @brief Read property handler for Vector3f class. Is called when a property is read from the Vector3f object.
+ * 		  Responsible for returning the value of the property. Only the properties 'x', 'y' and 'z' are allowed.
+ * 		  Trying to access any other property will result in a exception.
+ * 		  Type of the property is always double.
+ *
+ * @param zend_object* object
+ * @param zend_string* member
+ * @param int type
+ * @param void** cache_slot
+ * @param zval* rv
+ * @return zval*
+ */
+static zval *vector3f_read_prop_handler(zend_object *object, zend_string *member, int type, void **cache_slot, zval *rv)
+{
+    vector3f_object *obj_ptr = vector3f_objptr_from_zend_objptr(object);
+
+	if (type != BP_VAR_R && type != BP_VAR_IS) {
+		zend_throw_error(NULL, "Properties are virtual and cannot be referenced!");
+
+		rv = &EG(uninitialized_zval);
+	} else {
+        if (zend_string_equals_literal(member, "x")) {
+			ZVAL_DOUBLE(rv, obj_ptr->x);
+        }
+        else if (zend_string_equals_literal(member, "y")) {
+		    ZVAL_DOUBLE(rv, obj_ptr->y);
+        }
+		else if (zend_string_equals_literal(member, "z")) {
+			ZVAL_DOUBLE(rv, obj_ptr->z);
+		} else {
+            ZVAL_NULL(rv);
+        }
+	}
+
+	return rv;
+}
+
+/**
+ * @brief Write property handler for Vector3f class. Is called when a property is written to the Vector3f object.
+ * 		  Responsible for writing the value to the property. Only the properties 'x', 'y' and 'z' are allowed.
+ * 		  Trying to write to any other property will result in a exception.
+ * 		  Type of the assigned value must be long or double. Otherwise an exception is thrown.
+ *
+ * @param zend_object* object
+ * @param zend_string* member
+ * @param zval* value
+ * @param void** cache_slot
+ * @return zval*
+ */
+static zval *vector3f_write_prop_handler(zend_object *object, zend_string *member, zval *value, void **cache_slot)
+{
+    if (Z_TYPE_P(value) == IS_LONG) {
+        convert_to_double(value);
+    }
+
+    if (Z_TYPE_P(value) != IS_DOUBLE) {
+		zend_throw_error(NULL, "Inside Vector3f only int and float values can be stored. '$vec[int] = float' or '$vec[int] = int']");
+        return value;
+    } else {
+        vector3f_object *obj_ptr = vector3f_objptr_from_zend_objptr(object);
+
+        if (zend_string_equals_literal(member, "x")) {
+		    obj_ptr->x = Z_DVAL_P(value);
+        } else if (zend_string_equals_literal(member, "y")) {
+		    obj_ptr->y = Z_DVAL_P(value);
+        } else if (zend_string_equals_literal(member, "z")) {
+		    obj_ptr->z = Z_DVAL_P(value);
+        } else {
+		    zend_throw_error(NULL, "Trying to write into a invalid property!");
+        }
+    }
+
+	return value;
+}
+
+/**
+ * @brief Debug info handler for Vector3f class. Is called when a Vector3f object is printed.
+ * 		  Responsible for returning the debug info of the Vector3f object.
+ * 		  The debug info is an array with the keys 'x', 'y' and 'z' and the corresponding values.
+ *
+ * @param zend_object* object
+ * @param int* is_temp
+ * @return HashTable*
+ */
+static HashTable *vector3f_debug_info_handler(zend_object *object, int *is_temp)
+{
+    vector3f_object *obj_ptr = vector3f_objptr_from_zend_objptr(object);
+    zval zv;
+    HashTable *ht;
+
+    ht = zend_new_array(3);
+    *is_temp = 1;
+
+    ZVAL_DOUBLE(&zv, obj_ptr->x);
+    zend_hash_str_update(ht, "x", sizeof("x") - 1, &zv);
+    ZVAL_DOUBLE(&zv, obj_ptr->y);
+    zend_hash_str_update(ht, "y", sizeof("y") - 1, &zv);
+    ZVAL_DOUBLE(&zv, obj_ptr->z);
+    zend_hash_str_update(ht, "z", sizeof("z") - 1, &zv);
+
+    return ht;
+}
+
+/**
+ * @brief Array get handler for Vector3f class. Is called when a Vector3f object is accessed as an array.
+ * 		  Responsible for returning the value of the array offset. Only the offsets 0, 1 and 2 are allowed.
+ * 		  Trying to access any other offset will result in a exception.
+ * 		  Type of the offset is always long.
+ *
+ * @param zend_object* object
+ * @param zval* offset
+ * @param int type
+ * @param zval* rv
+ * @return zval*
+ */
+zval *vector3f_array_get_handler(zend_object *object, zval *offset, int type, zval *rv)
+{
+	if(offset == NULL) {
+        zend_throw_error(NULL, "Cannot apply [] to Vector3f object!");
+	}
+
+    vector3f_object *obj_ptr = vector3f_objptr_from_zend_objptr(object);
+
+    if (Z_TYPE_P(offset) == IS_LONG) {
+		size_t index = (size_t)Z_LVAL_P(offset);
+
+		if (index == 0) {
+			ZVAL_DOUBLE(rv, obj_ptr->x);
+		} else if (index == 1) {
+			ZVAL_DOUBLE(rv, obj_ptr->y);
+		} else if (index == 2) {
+			ZVAL_DOUBLE(rv, obj_ptr->z);
+		} else {
+			ZVAL_NULL(rv);
+		}
+	} else {
+        zend_throw_error(NULL, "Only a int offset '$vec[int]' can be used with the Vector3f object");
+		ZVAL_NULL(rv);
+	}
+
+	return rv;
+}
+
+/**
+ * @brief Construct a new Vector3f object. Is called when a new Vector3f object is created.
+ * 		  Responsible for initializing the Vector3f object.
+ * 		  The constructor takes 0, 1 or 3 arguments. If 0 arguments are passed, the Vector3f object is initialized with 0.0f.
+ * 		  If 1 argument is passed, the Vector3f object is initialized with the passed value for x, y and z.
+ * 		  If 3 arguments are passed, the Vector3f object is initialized with the passed values for x, y and z.
+ */
+PHP_METHOD(Vector3f, __construct)
+{
+    zval *obj;
+    vector3f_object *obj_ptr = vector3f_objptr_from_zend_objptr(Z_OBJ_P(ZEND_THIS));
+
+    double x = 0.0;
+    double y = 0.0;
+    double z = 0.0;
+
+    if (zend_parse_parameters(ZEND_NUM_ARGS(), "|ddd", &x, &y, &z) == FAILURE) {
+        return;
+    }
+
+    if (ZEND_NUM_ARGS() == 0) {
+        return;
+    }
+    else if (ZEND_NUM_ARGS() == 1) {
+        obj_ptr->x = x;
+        obj_ptr->y = x;
+        obj_ptr->z = x;
+
+        return;
+    } else if (ZEND_NUM_ARGS() == 2) {
+		zend_throw_error(NULL, "Too few arguments passed to Vector3f constructor, 0, 1 or 3 expected!");
+	} else if (ZEND_NUM_ARGS() == 3) {
+		obj_ptr->x = x;
+		obj_ptr->y = y;
+		obj_ptr->z = z;
+
+		return;
+	}
+}
+
+/**
+ * @brief Array set handler for Vector3f class. Is called when a Vector3f object is written to as an array.
+ * 		  Responsible for writing the value to the array offset. Only the offsets 0, 1 and 2 are allowed.
+ * 		  Trying to write to any other offset will result in a exception.
+ * 		  Type of the offset is always long.
+ * 		  Type of the assigned value must be long or double. Otherwise an exception is thrown.
+ *
+ * @param zend_object* object
+ * @param zval* offset
+ * @param zval* value
+ * @return void
+ */
+void vector3f_array_set_handler(zend_object *object, zval *offset, zval *value)
+{
+	if (Z_TYPE_P(value) == IS_LONG) {
+        convert_to_double(value);
+    } else if (Z_TYPE_P(value) != IS_DOUBLE) {
+		zend_throw_error(NULL, "Inside Vector3f only int and float values can be stored. '$vec[int] = float' or '$vec[int] = int']"); return;
+	}
+
+    vector3f_object *obj_ptr = vector3f_objptr_from_zend_objptr(object);
+
+	if (offset == NULL || Z_TYPE_P(offset) != IS_LONG || Z_LVAL_P(offset) < 0 || Z_LVAL_P(offset) >= 3) {
+        zend_throw_error(NULL, "Vector3f offset must be a int '$vec[int]', 0, 1 or 2!"); return;
+	}
+
+	if ((size_t)Z_LVAL_P(offset) == 0) {
+		obj_ptr->x = Z_DVAL_P(value);
+	} else if ((size_t)Z_LVAL_P(offset) == 1) {
+		obj_ptr->y = Z_DVAL_P(value);
+	} else {
+		obj_ptr->z = Z_DVAL_P(value);
+	}
+}
+
+// ------------------------------------------------------------------
 // Module initialization
 // ------------------------------------------------------------------
 PHP_MINIT_FUNCTION(fastmath)
 {
 	zend_class_entry tmp_ce;
 
+	// Vector2f class
 	INIT_NS_CLASS_ENTRY(tmp_ce, "SW\\Math", "Vector2f", vector2f_methods);
+
 	vector2f_ce = zend_register_internal_class(&tmp_ce);
 	vector2f_ce->create_object = vector2f_create_handler;
 
 	memcpy(&vector2f_handlers, zend_get_std_object_handlers(), sizeof(vector2f_handlers));
+
 	vector2f_handlers.get_debug_info = vector2f_debug_info_handler;
 	vector2f_handlers.read_dimension = vector2f_array_get_handler;
 	vector2f_handlers.write_dimension = vector2f_array_set_handler;
-
 	vector2f_handlers.read_property = vector2f_read_prop_handler;
 	vector2f_handlers.write_property = vector2f_write_prop_handler;
 	// vector2f_handlers.do_operation = vector2f_do_op_handler;
 	vector2f_handlers.offset = XtOffsetOf(vector2f_object, std);
+
+	// Vector3f class
+	INIT_NS_CLASS_ENTRY(tmp_ce, "SW\\Math", "Vector3f", vector3f_methods);
+
+	vector3f_ce = zend_register_internal_class(&tmp_ce);
+	vector3f_ce->create_object = vector3f_create_handler;
+
+	memcpy(&vector3f_handlers, zend_get_std_object_handlers(), sizeof(vector3f_handlers));
+
+	vector3f_handlers.get_debug_info = vector3f_debug_info_handler;
+	vector3f_handlers.read_dimension = vector3f_array_get_handler;
+	vector3f_handlers.write_dimension = vector3f_array_set_handler;
+	vector3f_handlers.read_property = vector3f_read_prop_handler;
+	vector3f_handlers.write_property = vector3f_write_prop_handler;
+	// vector3f_handlers.do_operation = vector3f_do_op_handler;
+	vector3f_handlers.offset = XtOffsetOf(vector3f_object, std);
 
 	return SUCCESS;
 }
